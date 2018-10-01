@@ -14,7 +14,7 @@
     <!-- css -->
     <link href="./Z-Uno_Shield_Configurator_files/default.css" rel="stylesheet" type="text/css">
     <link href="./Z-Uno_Shield_Configurator_files/waslidemenu.css" rel="stylesheet" type="text/css">
-     
+      
     
     <!-- js -->
     <script type="text/javascript" async="" src="./Z-Uno_Shield_Configurator_files/ga.js"></script><script type="text/javascript" src="./Z-Uno_Shield_Configurator_files/jquery-1.11.1.min.js"></script>
@@ -1307,16 +1307,17 @@
         margin-top: 30px;
         margin-bottom: 30px;
         display: grid;
-        grid-template-rows: auto;
-        grid-template-columns: 70% 30%;
+        grid-template-rows: 1fr auto;
+        grid-template-columns: 1fr;
     }
     .settings_svg_connection {
-        grid-column: 1;
+        grid-row: 1;
     }
     .settings_manual_connection {
         margin: auto 10px auto 10px;
         background-color: #f0f0f0;
-        grid-column: 2;
+        grid-row: 2;
+            display: none;
     }
     .settings_manual_connection ul {
         list-style: none;

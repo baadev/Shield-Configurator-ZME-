@@ -1,8 +1,10 @@
 // Helpers
 
 function svgEl(id) { 
-    console.log(document.getElementById('obj'));
     return document.getElementById('obj').contentDocument.getElementById(id);
+}
+function svgdEl(id) {
+    return document.getElementById('obj_2').contentDocument.getElementById(id);
 }
 
 function htmlEl(id) {
@@ -247,12 +249,22 @@ function jumersPWM0() {
         svgEl('type_' + pin + '_pwm').style.opacity = 1;
         htmlElsEna('pin3', false);
         htmlEl('pin3_disabled').style.display = 'block';
+
+        svgdEl('jumper_' + pin).style.display = 'block';
+        svgdEl('direction_' + pin + '_o').style.display = 'block';
+        svgdEl('type_' + pin + '_pwm').style.display = 'block';
+        svgdEl('layer11').style.display = 'block';
     } else if (mode === "NC") {
         svgEl('jumper_' + pin).style.fillOpacity = 0;
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_pwm').style.opacity = 0;
         htmlElsEna('pin3', true);
         htmlEl('pin3_disabled').style.display = 'none';
+
+        svgdEl('jumper_' + pin).style.display = 'none';
+        svgdEl('direction_' + pin + '_o').style.display = 'none';
+        svgdEl('type_' + pin + '_pwm').style.display = 'none';
+        svgdEl('layer11').style.display = 'none';
     }
     
     if (mode === "PWM") {
@@ -622,3 +634,5 @@ function updateCode() {
     htmlEl('code').innerHTML = ret.code;
     htmlEl('notes').innerHTML = ("\n" + ret.notes + "\n").replace(/\n-([^\n]*)\n/g, '\n<li>$1</li>\n');
 }
+
+// TODO: zoom on 'shield details'
