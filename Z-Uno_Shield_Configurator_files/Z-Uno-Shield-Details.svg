@@ -4197,16 +4197,16 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1025"
+     inkscape:window-height="1052"
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.35355339"
-     inkscape:cx="1794.3105"
+     inkscape:cx="1872.0922"
      inkscape:cy="1444.2781"
-     inkscape:window-x="0"
-     inkscape:window-y="1107"
+     inkscape:window-x="48"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer7"
+     inkscape:current-layer="svg2"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -14439,13 +14439,15 @@
     <path
        style="opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 2074.7295,2446.1255 v 101.8234 H 3223 v -330.0986"
-       id="path69961"
-       inkscape:connector-curvature="0" />
+       id="leg_pin12_DHT"
+       inkscape:connector-curvature="0"
+       inkscape:label="leg_pin12_DHT" />
     <path
        style="opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 2170.896,2443.2971 v 101.8234 H 3222 v -327.2702"
-       id="path69963"
-       inkscape:connector-curvature="0" />
+       id="leg_pin11_DHT"
+       inkscape:connector-curvature="0"
+       inkscape:label="leg_pin11_DHT" />
     <path
        style="opacity:1;fill:none;fill-rule:evenodd;stroke:#ff8000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 3139,2217.8503 v 71 H 2969 V 157.85034 h -987 v 384"
@@ -14651,7 +14653,7 @@
                id="g6008">
               <polygon
                  id="polygon6006"
-                 points="0.065,24.584 0.007,24.313 50.552,24.313 50.496,24.584 "
+                 points="50.496,24.584 0.065,24.584 0.007,24.313 50.552,24.313 "
                  style="fill:#131313" />
             </g>
             <g

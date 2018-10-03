@@ -822,6 +822,7 @@ function updateCode() {
 function svgdGen() {
     var anyDevice = false;
     var buttonLegs = []; // this array contains current selected leg for button. This will be helpful when we want hide layer with button
+    var pressureLegs = [];
     var LED = undefined;
 
     for (var i = 3; i <= 16; i++) {
@@ -831,29 +832,42 @@ function svgdGen() {
             if (pins[i]['type'] != 'NC') anyDevice = true;
 
             // Buttons
-            if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
-                svgdEl('layer7').style.display = "block";
-                svgdEl('leg_pin' + i + '_button').style.opacity = 1;
+            try {
+                // LED strip 
+                if (pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || 
+                    pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') { LED = true; }
 
-                buttonLegs.push(i);
-            } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
-                try {
-                    svgdEl('leg_pin' + i + '_button').style.opacity = 0;
-                    if (i in buttonLegs) buttonLegs = -1;
-                } catch (e) { // this way should be selected if we don't have this svg element
-                    
+                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
+                    svgdEl('layer7').style.display = "block";
+                    svgdEl('leg_pin' + i + '_button').style.opacity = 1;
+
+                    buttonLegs.push(i);
+                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
+                        svgdEl('leg_pin' + i + '_button').style.opacity = 0;
+
+                        if (i in buttonLegs) buttonLegs = -1;
                 }
-            }
 
-            // LED strip 
-            if (pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || 
-                pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') { 
-                LED = true;
-            }
+                // DHT
+                if (pins[i]['type'] == 'DHT') {
+                    svgdEl('layer14').style.display = "block";
+                    svgdEl('leg_pin' + i + '_DHT').style.opacity = 1;
+                } else if (pins[i]['type'] != 'DHT') {
+                    svgdEl('leg_pin' + i + '_DHT').style.opacity = 0;
+                }
+                if ((pins[11]['type'] != 'DHT') && (pins[12]['type'] != 'DHT')) {
+                    svgdEl('layer14').style.display = "none";
+                }
 
-        } catch(e) {
+                // DS18B20
+                if (pins[11]['type'] == 'DS18B20') {
+                    svgdEl('layer13').style.display = "block";
+                } else if (pins[11]['type'] != 'DS18B20') {
+                    svgdEl('layer13').style.display = "none";
+                }
 
-        }
+            } catch (e) {} // this way should be selected if we don't have this svg element
+        } catch(e) {}
     }
 
     // Power supply select 
