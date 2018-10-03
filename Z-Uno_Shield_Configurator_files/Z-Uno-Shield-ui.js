@@ -653,8 +653,6 @@ function jumersUART() {
         svgdEl('type_' + pin + '_rs485').style.opacity = 0;
         svgdEl('type_' + pin + '_digital').style.opacity = 0;
 
-        svgdEl('layer11').style.display = "none";
-        svgdEl('layer7').style.display = "none";
         if (pin === 'pin7' && (htmlEl('pin8_RS485').checked || htmlEl('pin8_UART').checked)) {
             htmlEl('pin8_NC').click();
         }
@@ -673,28 +671,6 @@ function jumersUART() {
         setPinSettings(pinNum, group, "RS485");
     } else {
         setPinSettings(pinNum, group, "NC");
-    }
-    
-    if (mode === "i_3" && htmlEl(pin + '_i_3_param_1').selectedIndex == 0) {
-        svgdEl('layer11').style.display = "block";
-        svgdEl('layer7').style.display = "block";
-
-        svgdEl('path6455').style.opacity = pin == 'pin7' ? 1 : 0;
-        svgdEl('path6453').style.opacity = pin == 'pin8' ? 1 : 0;
-        svgdEl('path6451').style.opacity = 0;
-        svgdEl('path6449').style.opacity = 0;
-        svgdEl('path6447').style.opacity = 0;
-        svgdEl('path6445').style.opacity = 0;
-        svgdEl('path6443').style.opacity = 0;
-        svgdEl('path6441').style.opacity = 0;
-    } else if (mode === "o_3") {
-        svgdEl('layer7').style.display = "none";
-    } else if (mode === "UART") {
-        svgdEl('layer7').style.display = "none";
-    } else if (mode === "RS485") {
-        svgdEl('layer7').style.display = "none";
-    } else {
-        svgdEl('layer7').style.display = "none";
     }
 
     updateParamsUI(pin, group);
@@ -837,15 +813,43 @@ function updateCode() {
 }
 
 function svgdGen() {
-    console.log(pins);
-    var devices = [];
+    var anyDevice = false;
+    var LED = undefined;
 
     for (var i = 3; i <= 16; i++) {
-        if (i > 8 && i < 11) i = 11;
-        if (pins[i].type != "NC") {
-            devices.push(i);
+        if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+
+        if (pins[i]['type'] != 'NC') anyDevice = true;
+
+        // Buttons
+        if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
+            svgdEl('layer7').style.display = "block";
+            svgdEl('leg_pin' + i + '_button').style.opacity = 1;
+        } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
+            try {
+                svgdEl('leg_pin' + i + '_button').style.opacity = 0;
+            } catch (e) {
+                // this way should be selected if we don't have this svg element
+            }
+        }
+
+        // LED strip 
+        if (pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || 
+            pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') { 
+            LED = true;
+        }
+
+        // Power supply select 
+        if (anyDevice && (!LED)) { // if any device exists and device !LED we use small power supply  
+            svgdEl('layer1').style.display = "none"
+            svgdEl('layer11').style.display = "block";
+        } else if (anyDevice && LED) { // if device is LED we use 180W power supply
+            svgdEl('layer11').style.display = "none"
+            svgdEl('layer1').style.display = "block"
+        } else if (!anyDevice) {
+            svgdEl('layer1').style.display = "none"
+            svgdEl('layer11').style.display = "none";
         }
     }
-    console.log(devices);
 }
 // TODO: zoom on 'shield details'

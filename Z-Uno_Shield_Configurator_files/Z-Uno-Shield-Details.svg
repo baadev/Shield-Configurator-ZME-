@@ -4201,12 +4201,12 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="0.35355339"
-     inkscape:cx="2277.9715"
-     inkscape:cy="1783.6894"
+     inkscape:cx="1794.3105"
+     inkscape:cy="1444.2781"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="1107"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer7"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
@@ -4217,7 +4217,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="ZunoShield"
-     style="display:inline">
+     style="display:inline;opacity:1">
     <g
        transform="translate(1680.0001,389.58016)"
        id="g6113-6"
@@ -14651,7 +14651,7 @@
                id="g6008">
               <polygon
                  id="polygon6006"
-                 points="0.007,24.313 50.552,24.313 50.496,24.584 0.065,24.584 "
+                 points="0.065,24.584 0.007,24.313 50.552,24.313 50.496,24.584 "
                  style="fill:#131313" />
             </g>
             <g
@@ -15219,51 +15219,59 @@
     <path
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
-       id="path6441"
+       id="leg_pin3_button"
        d="m 3443.6405,2218.2629 v 329.686 h -890.9068 v -113.1371"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin3_button" />
     <path
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
-       id="path6443"
+       id="leg_pin4_button"
        d="m 3443.6405,2218.2629 v 326.8576 h -987.0734 v -104.6518"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin4_button" />
     <path
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
-       id="path6445"
+       id="leg_pin5_button"
        d="m 3443.6405,2218.2629 v 324.0292 H 2360.4006 v -101.8234"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin5_button" />
     <path
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
-       id="path6447"
+       id="leg_pin6_button"
        d="m 3443.6405,2218.2629 v 329.686 H 2264.2341 v -107.4802"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin6_button" />
     <path
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
-       id="path6449"
+       id="leg_pin11_button"
        d="m 3443.6405,2218.2629 v 326.8576 H 2170.896 v -101.8234"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin11_button" />
     <path
        sodipodi:nodetypes="ccccc"
        inkscape:connector-curvature="0"
-       id="path6451"
+       id="leg_pin12_button"
        d="m 3443.6405,2218.2629 v 329.686 h -1368.911 v -101.8234 h 2.8284"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin12_button" />
     <path
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
-       id="path6453"
+       id="leg_pin8_button"
        d="m 3443.6405,2218.2629 v 326.8576 H 1981.3914 v -101.8234"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin8_button" />
     <path
        sodipodi:nodetypes="cccc"
        inkscape:connector-curvature="0"
-       id="path6455"
+       id="leg_pin7_button"
        d="m 3443.6405,2218.2629 v 329.686 H 1885.2249 v -101.8234"
-       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#00ff00;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:label="leg_pin7_button" />
     <path
        style="opacity:1;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 2078,228.63851 h 890 V 2286.8504 h 389.3429 v -69.8276"
