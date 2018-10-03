@@ -91,7 +91,7 @@ function setPinSettings(pin, group, type) {
 function updateParams() {
     var reg = this.id.match(/^((pin([^_]+))_(.*))_param_.*$/);
     if (!reg || reg.length < 3) return;
-    
+
     var group = reg[1],
         pin = reg[2],
         pinNum = reg[3],
@@ -135,6 +135,8 @@ function jumersADC() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
+    console.log(reg);
+
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -239,6 +241,8 @@ function jumersPWM() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
+    console.log(reg);
+
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -285,9 +289,10 @@ function jumersPWM() {
 
 function jumersPWM0() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
-    console.log(reg);
     if (!reg || reg.length < 3) return;
     
+    console.log(reg);
+
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -332,6 +337,8 @@ function jumersGPIO() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
+    console.log(reg);
+
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -398,6 +405,8 @@ function jumersOneWire() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
+    console.log(reg);
+
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -486,6 +495,8 @@ function jumersUART() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
+    console.log(reg);
+
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -641,6 +652,9 @@ function jumersUART() {
         svgdEl('type_' + pin + '_uart').style.opacity = 0;
         svgdEl('type_' + pin + '_rs485').style.opacity = 0;
         svgdEl('type_' + pin + '_digital').style.opacity = 0;
+
+        svgdEl('layer11').style.display = "none";
+        svgdEl('layer7').style.display = "none";
         if (pin === 'pin7' && (htmlEl('pin8_RS485').checked || htmlEl('pin8_UART').checked)) {
             htmlEl('pin8_NC').click();
         }
@@ -661,6 +675,28 @@ function jumersUART() {
         setPinSettings(pinNum, group, "NC");
     }
     
+    if (mode === "i_3" && htmlEl(pin + '_i_3_param_1').selectedIndex == 0) {
+        svgdEl('layer11').style.display = "block";
+        svgdEl('layer7').style.display = "block";
+
+        svgdEl('path6455').style.opacity = pin == 'pin7' ? 1 : 0;
+        svgdEl('path6453').style.opacity = pin == 'pin8' ? 1 : 0;
+        svgdEl('path6451').style.opacity = 0;
+        svgdEl('path6449').style.opacity = 0;
+        svgdEl('path6447').style.opacity = 0;
+        svgdEl('path6445').style.opacity = 0;
+        svgdEl('path6443').style.opacity = 0;
+        svgdEl('path6441').style.opacity = 0;
+    } else if (mode === "o_3") {
+        svgdEl('layer7').style.display = "none";
+    } else if (mode === "UART") {
+        svgdEl('layer7').style.display = "none";
+    } else if (mode === "RS485") {
+        svgdEl('layer7').style.display = "none";
+    } else {
+        svgdEl('layer7').style.display = "none";
+    }
+
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
@@ -800,4 +836,16 @@ function updateCode() {
     htmlEl('notes').innerHTML = ("\n" + ret.notes + "\n").replace(/\n-([^\n]*)\n/g, '\n<li>$1</li>\n');
 }
 
+function svgdGen() {
+    console.log(pins);
+    var devices = [];
+
+    for (var i = 3; i <= 16; i++) {
+        if (i > 8 && i < 11) i = 11;
+        if (pins[i].type != "NC") {
+            devices.push(i);
+        }
+    }
+    console.log(devices);
+}
 // TODO: zoom on 'shield details'
