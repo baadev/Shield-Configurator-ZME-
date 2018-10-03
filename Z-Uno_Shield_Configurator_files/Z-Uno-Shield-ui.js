@@ -101,6 +101,7 @@ function updateParams() {
     updateSetting(pin, group, mode);
     updateParamsUI(pin, group);
     updateCode();
+    svgdGen();
 }
 
 function updateParamsUI(pin, group) {
@@ -235,6 +236,7 @@ function jumersADC() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    svgdGen();
 }
 
 function jumersPWM() {
@@ -285,6 +287,7 @@ function jumersPWM() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    svgdGen();
 }
 
 function jumersPWM0() {
@@ -331,6 +334,7 @@ function jumersPWM0() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    svgdGen();
 }
 
 function jumersGPIO() {
@@ -399,6 +403,7 @@ function jumersGPIO() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    svgdGen();
 }
 
 function jumersOneWire() {
@@ -489,6 +494,7 @@ function jumersOneWire() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    svgdGen();
 }
 
 function jumersUART() {
@@ -676,6 +682,7 @@ function jumersUART() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
+    svgdGen();
 }
 
 // Prototypes
@@ -737,7 +744,7 @@ function loadConfiguration() {
 
 // Default
 
-// Think about onload event
+// TODO: Think about onload event
 htmlEl('obj_2').onload = function() {
     ['pin3pwm', 'pin3', 'pin4', 'pin5', 'pin6', 'pin7', 'pin8', 'pin11', 'pin12', 'pin13', 'pin14', 'pin15', 'pin16'].forEach(function(pin) {
         htmlEl('settings_' + pin).onmouseover = function() {
@@ -814,42 +821,55 @@ function updateCode() {
 
 function svgdGen() {
     var anyDevice = false;
+    var buttonLegs = []; // this array contains current selected leg for button. This will be helpful when we want hide layer with button
     var LED = undefined;
 
     for (var i = 3; i <= 16; i++) {
-        if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+        try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
+            if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
 
-        if (pins[i]['type'] != 'NC') anyDevice = true;
+            if (pins[i]['type'] != 'NC') anyDevice = true;
 
-        // Buttons
-        if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
-            svgdEl('layer7').style.display = "block";
-            svgdEl('leg_pin' + i + '_button').style.opacity = 1;
-        } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
-            try {
-                svgdEl('leg_pin' + i + '_button').style.opacity = 0;
-            } catch (e) {
-                // this way should be selected if we don't have this svg element
+            // Buttons
+            if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
+                svgdEl('layer7').style.display = "block";
+                svgdEl('leg_pin' + i + '_button').style.opacity = 1;
+
+                buttonLegs.push(i);
+            } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
+                try {
+                    svgdEl('leg_pin' + i + '_button').style.opacity = 0;
+                    if (i in buttonLegs) buttonLegs = -1;
+                } catch (e) { // this way should be selected if we don't have this svg element
+                    
+                }
             }
-        }
 
-        // LED strip 
-        if (pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || 
-            pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') { 
-            LED = true;
-        }
+            // LED strip 
+            if (pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || 
+                pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') { 
+                LED = true;
+            }
 
-        // Power supply select 
-        if (anyDevice && (!LED)) { // if any device exists and device !LED we use small power supply  
-            svgdEl('layer1').style.display = "none"
-            svgdEl('layer11').style.display = "block";
-        } else if (anyDevice && LED) { // if device is LED we use 180W power supply
-            svgdEl('layer11').style.display = "none"
-            svgdEl('layer1').style.display = "block"
-        } else if (!anyDevice) {
-            svgdEl('layer1').style.display = "none"
-            svgdEl('layer11').style.display = "none";
+        } catch(e) {
+
         }
+    }
+
+    // Power supply select 
+    if (anyDevice && (!LED)) { // if any device exists and device !LED we use small power supply  
+        svgdEl('layer1').style.display = "none"
+        svgdEl('layer11').style.display = "block";
+    } else if (anyDevice && LED) { // if device is LED we use 180W power supply
+        svgdEl('layer11').style.display = "none"
+        svgdEl('layer1').style.display = "block"
+    } else if (!anyDevice) {
+        svgdEl('layer1').style.display = "none"
+        svgdEl('layer11').style.display = "none";
+    }
+
+    if (buttonLegs.length == 0) {
+        svgdEl('layer7').style.display = "none";
     }
 }
 // TODO: zoom on 'shield details'
