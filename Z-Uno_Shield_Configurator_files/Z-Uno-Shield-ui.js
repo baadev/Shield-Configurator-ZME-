@@ -702,7 +702,7 @@ function updateCode() {
     htmlEl('notes').innerHTML = ("\n" + ret.notes + "\n").replace(/\n-([^\n]*)\n/g, '\n<li>$1</li>\n');
 }
 
-function svgdGen(pinNum, display) {
+function svgdGen(pinNum, deviceType, display) {
     var anyDevice = false;
     var deviceCount = 0;
 
@@ -715,88 +715,66 @@ function svgdGen(pinNum, display) {
         var mode = pins[pinNum]['type'],
             pin  = 'pin' + pinNum;
 
+        // Pressure
         if (pinNum >= 3 && pinNum <= 6) {
 
         }
 
-        switch(pinNum) { // layers
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                // Buttons
-                for (var i = 3; i < 13; i++) {
-                    if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+        // Buttons
+        if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "button") {
+            for (var i = 3; i <= 12; i++) {
+                if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
 
-                    if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
-                        svgEl('layer7', 'obj_2').style.display = "block";
-                        svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 1;
+                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general') && display) {        
+                    svgEl('layer7', 'obj_2').style.display = "block";
+                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 1;
 
-                        buttonLegs.push(i);
-                    } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
-                            svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
+                    buttonLegs.push(i);
+                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general') || !display) {
+                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
 
-                            if (i in buttonLegs) buttonLegs = -1;
-                    }
+                    if (i in buttonLegs) buttonLegs = -1;
                 }
-                break;
-
-            case 7:
-                break;
-
-            case 8:
-                break;
-
-            case 11:
-                // DS18B20
-                if (pins[11]['type'] == 'DS18B20') {
-                    svgEl('layer13', 'obj_2').style.display = "block";
-                } else if (pins[11]['type'] != 'DS18B20') {
-                    svgEl('layer13', 'obj_2').style.display = "none";
-                }
-            case 12:
-                // DHT
-                if (pins[pinNum]['type'] == 'DHT') {
-                    svgEl('layer14', 'obj_2').style.display = "block";
-                    svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
-                } else if (pins[pinNum]['type'] != 'DHT') {
-                    svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
-                }
-                if ((pins[11]['type'] != 'DHT') && (pins[12]['type'] != 'DHT')) {
-                    svgEl('layer14', 'obj_2').style.display = "none";
-                }
-                break;
-
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-                // LED strip 
-                if (pins[pinNum]['params']['1'] == 'red' || pins[pinNum]['params']['1'] == 'green' || 
-                    pins[pinNum]['params']['1'] == 'blue' || pins[pinNum]['params']['1'] == 'white') { LED = true; }
-
-                // Contactor
-                if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'single')) {
-                    svgEl('layer12', 'obj_2').style.display = 'block';
-                } else if (true) {
-
-                }
-                break;
-            case -1:
-                for (var i = 3; i < 15; i++) {
-                    if (i == 10 || i == 11) { i = 12 };
-                    svgEl('layer' + i, 'obj_2').style.display = 'none';
-                }
-                break;
-            default:
-                console.log("Wrong pinNum argument:" + pinNum);
-                break;
+            }
         }
-    }
 
+        // DS18B20
+        if (pinNum == 11 && deviceType == "DS18B20") {
+            if ((pins[11]['type'] == 'DS18B20') && display) {
+                svgEl('layer13', 'obj_2').style.display = "block";
+            } else if (pins[11]['type'] != 'DS18B20' || !display) {
+                svgEl('layer13', 'obj_2').style.display = "none";
+            }
+        }
+
+        // DHT
+        if (pinNum == 11 || pinNum == 12 && deviceType == "DHT") {
+            if ((pins[pinNum]['type'] == 'DHT') && display) {
+                svgEl('layer14', 'obj_2').style.display = "block";
+                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
+            } else if (pins[pinNum]['type'] != 'DHT') {
+                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
+            }
+            if (((pins[11]['type'] != 'DHT') && (pins[12]['type'] != 'DHT')) || !display) {
+                svgEl('layer14', 'obj_2').style.display = "none";
+            }            
+        }
+
+        // Contactor
+        if (pinNum >= 13 && pinNum <= 16 && (deviceType == "contactor")) {
+            if ((pins[pinNum]['type'] == 'SwitchBinary') && (pins[pinNum]['params']['1'] == 'switch') && display) {
+                svgEl('layer12', 'obj_2').style.display = 'block';
+                svgEl('leg_pin' + pinNum + '_contactor', 'obj_2').style.opacity = 1;
+            } else if (true) {
+
+            }
+        }
+
+        // LED strip 
+        if (pins[pinNum]['params']['1'] == 'red' || pins[pinNum]['params']['1'] == 'green' || 
+            pins[pinNum]['params']['1'] == 'blue' || pins[pinNum]['params']['1'] == 'white') { LED = true; }
+        
+    }   
 
 
     for (var i = 3; i <= 16; i++) {
@@ -857,6 +835,7 @@ function addManualPages(pages) {
         $("#manual_pages").append('</div>');
     }
 }
+
 
 //addManualPages();
 function svgdGenLoad() {
