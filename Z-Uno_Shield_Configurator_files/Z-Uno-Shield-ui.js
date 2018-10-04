@@ -10,6 +10,9 @@ function svgdEl(id) {
 function htmlEl(id) {
     return document.getElementById(id);
 }
+function htmlCEl(id) {
+    return document.getElementsByClassName(id);
+}
 
 function htmlElsEna(name, ena) {
     document.getElementsByName(name).forEach(function(el) {
@@ -823,7 +826,10 @@ function svgdGen() {
     var anyDevice = false;
     var buttonLegs = []; // this array contains current selected leg for button. This will be helpful when we want hide layer with button
     var pressureLegs = [];
+    var contactorLegs = [];
     var LED = undefined;
+
+    // As way for solution can be switch construction. When we call this function we send argument what will select needed case for generate pages
 
     for (var i = 3; i <= 16; i++) {
         try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
@@ -866,12 +872,17 @@ function svgdGen() {
                     svgdEl('layer13').style.display = "none";
                 }
 
+                // Contactor
+                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'single')) {
+                    svgdEl('layer12').style.display = 'block';
+                } else if (true) {}
+
             } catch (e) {} // this way should be selected if we don't have this svg element
         } catch(e) {}
     }
 
     // Power supply select 
-    if (anyDevice && (!LED)) { // if any device exists and device !LED we use small power supply  
+    if (anyDevice && (!LED) || (contactorLegs.length > 0)) { // if any device exists and device !LED we use small power supply  
         svgdEl('layer1').style.display = "none"
         svgdEl('layer11').style.display = "block";
     } else if (anyDevice && LED) { // if device is LED we use 180W power supply
@@ -886,4 +897,36 @@ function svgdGen() {
         svgdEl('layer7').style.display = "none";
     }
 }
-// TODO: zoom on 'shield details'
+
+function openTab(evt, tabNum) {
+    var i, tabcontent, tablinks;
+
+    tabcontent = document.getElementsByClassName("manual_tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+
+    tablinks = document.getElementsByClassName("manual_tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" manual_active", "");
+    }
+
+    document.getElementById(tabNum).style.display = "block";
+    evt.currentTarget.className += " manual_active";
+}
+
+function addManualPages(pages) {
+    var numToCreate = pages.length;
+
+    for (var i = 1; i <= pages.length; i++) {
+        // add button
+        $("#manual_pages_control").append('<button class="manual_tablinks" onclick="openTab(event, ' + i + ')">' + i + '</button>');
+        // add page content
+        $("#manual_pages").append('<div id="' + i + '" class="manual_tabcontent">');
+        $("#manual_pages").append('<h3>Step #' + i + '</h3>');
+        $("#manual_pages").append('<p>' + pages[i]['content'] + '</p>');
+        $("#manual_pages").append('</div>');
+    }
+}
+
+//addManualPages();

@@ -1302,47 +1302,111 @@
     </div>
 </div>
 </div>
+
 <style type="text/css">
     .settings_row_connection {
         margin-top: 30px;
         margin-bottom: 30px;
         display: grid;
-        grid-template-rows: 1fr auto;
+        grid-template-rows: auto auto;
         grid-template-columns: 1fr;
     }
     .settings_svg_connection {
         grid-row: 1;
     }
     .settings_manual_connection {
-        margin: auto 10px auto 10px;
-        background-color: #f0f0f0;
+        width: 70%;
+        margin: 10px auto 10px auto;
         grid-row: 2;
-            display: none;
+        display: block;
     }
     .settings_manual_connection ul {
         list-style: none;
     }
+
+    #manual_pages {
+        width: 100%;
+    }
+    #manual_pages_control {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+    #manual_pages_control button {
+        background-color: #ddd;
+        border: 1px solid #ddd;
+        color: white;
+        padding: 15px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        float: left;
+    }
+    #manual_pages_control button:not(:last-child) {
+        border-right: none; /* Prevent double borders */
+    }
+    #manual_pages_control button:hover {
+        background-color: #ccc;
+    }
+    #manual_pages_control button.manual_active {
+        background-color: #bbb;
+    }
+    .manual_tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+    .manual_tabcontent h3 {
+        padding-top: 1em;
+    }
 </style>
+
 <div class="settings_row_connection">
-  <div class="settings_svg_connection">
-    <object id="obj_2" data="./Z-Uno_Shield_Configurator_files/Z-Uno-Shield-Details.svg" type="image/svg+xml" class="svg">
-        Your browser do not support SVG
-    </object>
-  </div>
-  <div class="settings_manual_connection">
-	<ul>
-		<li>First step</li>
-		<li>Next step <a href="">some link</a></li>
-		<ul style="margin-bottom: 0;">
-            <li>Some substep</li>
-            <li>Some substep</li>
-            <li>Some substep</li>
+    <div class="settings_svg_connection">
+        <object id="obj_2" data="./Z-Uno_Shield_Configurator_files/Z-Uno-Shield-Details.svg" type="image/svg+xml" class="svg">
+            Your browser do not support SVG
+        </object>
+    </div>
+
+    <div id="manual_pages">
+        <div id="manual_pages_control">
+            <button class="manual_tablinks" onclick="openTab(event, '1')">1</button>
+            <button class="manual_tablinks" onclick="openTab(event, '2')">2</button>
+            <button class="manual_tablinks" onclick="openTab(event, '3')">3</button>
+        </div>
+        <div id="1" class="manual_tabcontent">
+            <h3>Step #1</h3>
+            <p>descript of descriprtion about descript</p>
+        </div>
+
+        <div id="2" class="manual_tabcontent">
+            <h3>Step #2</h3>
+            <p>script script script script script script script script script</p> 
+        </div>
+
+        <div id="3" class="manual_tabcontent">
+            <h3>Step #3</h3>
+            <p>How about long descriptionHow about long descriptionHow about long descriptionHow about long descriptionHow about long descriptionHow about long descriptionHow about long descriptionHow about long descriptionHow about long descriptionHow about long descriptionHow about long description</p>
+        </div>
+    </div>
+
+<!--     <div class="settings_manual_connection">
+        <ul>
+        	<li>First step</li>
+        	<li>Next step <a href="">some link</a></li>
+        	<ul style="margin-bottom: 0;">
+                <li>Some substep</li>
+                <li>Some substep</li>
+                <li>Some substep</li>
+            </ul>
+        	<li>Next step</li>
+            <li>Next step</li>
         </ul>
-		<li>Next step</li>
-        <li>Next step</li>
-	</ul>
-  </div>
-</div>
+    </div> --></div>
+
 <div class="clear"></div>
 
 <h3>Notes</h3>
