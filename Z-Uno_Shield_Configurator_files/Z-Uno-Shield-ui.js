@@ -1,7 +1,7 @@
 // Helpers
 
-function svgEl(id) { 
-    return document.getElementById('obj').contentDocument.getElementById(id);
+function svgEl(id, obj) { 
+    return document.getElementById(obj ? obj : 'obj').contentDocument.getElementById(id);
 }
 function svgdEl(id) {
     return document.getElementById('obj_2').contentDocument.getElementById(id);
@@ -104,7 +104,6 @@ function updateParams() {
     updateSetting(pin, group, mode);
     updateParamsUI(pin, group);
     updateCode();
-    svgdGen();
 }
 
 function updateParamsUI(pin, group) {
@@ -239,7 +238,6 @@ function jumersADC() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    svgdGen();
 }
 
 function jumersPWM() {
@@ -290,7 +288,6 @@ function jumersPWM() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    svgdGen();
 }
 
 function jumersPWM0() {
@@ -310,22 +307,12 @@ function jumersPWM0() {
         svgEl('type_' + pin + '_pwm').style.opacity = 1;
         htmlElsEna('pin3', false);
         htmlEl('pin3_disabled').style.display = 'block';
-
-        svgdEl('jumper_' + pin).style.fillOpacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_pwm').style.opacity = 1;
-        svgdEl('layer11').style.display = 'block';
     } else if (mode === "NC") {
         svgEl('jumper_' + pin).style.fillOpacity = 0;
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_pwm').style.opacity = 0;
         htmlElsEna('pin3', true);
         htmlEl('pin3_disabled').style.display = 'none';
-
-        svgdEl('jumper_' + pin).style.fillOpacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('type_' + pin + '_pwm').style.opacity = 0;
-        svgdEl('layer11').style.display = 'none';
     }
     
     if (mode === "PWM") {
@@ -337,7 +324,6 @@ function jumersPWM0() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    svgdGen();
 }
 
 function jumersGPIO() {
@@ -356,41 +342,21 @@ function jumersGPIO() {
         svgEl('direction_' + pin + '_o').style.opacity = 1;
         svgEl('type_' + pin + '_digital').style.opacity = 1;
         svgEl('type_' + pin + '_dht').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_digital').style.opacity = 1;
-        svgdEl('type_' + pin + '_dht').style.opacity = 0;
     } else if (mode === "i_3") {
         svgEl('direction_' + pin + '_i').style.opacity = 1;
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 1;
         svgEl('type_' + pin + '_dht').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 1;
-        svgdEl('type_' + pin + '_dht').style.opacity = 0;
     } else if (mode === "dht") {
         svgEl('direction_' + pin + '_i').style.opacity = 1;
         svgEl('direction_' + pin + '_o').style.opacity = 1;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
         svgEl('type_' + pin + '_dht').style.opacity = 1;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
-        svgdEl('type_' + pin + '_dht').style.opacity = 1;
     } else if (mode === "NC") {
         svgEl('direction_' + pin + '_i').style.opacity = 0;
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
         svgEl('type_' + pin + '_dht').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
-        svgdEl('type_' + pin + '_dht').style.opacity = 0;
     }
     
     if (mode === "i_3") {
@@ -406,7 +372,6 @@ function jumersGPIO() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    svgdGen();
 }
 
 function jumersOneWire() {
@@ -426,60 +391,30 @@ function jumersOneWire() {
         svgEl('type_' + pin + '_digital').style.opacity = 1;
         svgEl('type_' + pin + '_onewire').style.opacity = 0;
         svgEl('type_' + pin + '_dht').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_digital').style.opacity = 1;
-        svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-        svgdEl('type_' + pin + '_dht').style.opacity = 0;
     } else if (mode === "i_3") {
         svgEl('direction_' + pin + '_i').style.opacity = 1;
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 1;
         svgEl('type_' + pin + '_onewire').style.opacity = 0;
         svgEl('type_' + pin + '_dht').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 1;
-        svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-        svgdEl('type_' + pin + '_dht').style.opacity = 0;
     } else if (mode === "dht") {
         svgEl('direction_' + pin + '_i').style.opacity = 1;
         svgEl('direction_' + pin + '_o').style.opacity = 1;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
         svgEl('type_' + pin + '_onewire').style.opacity = 0;
         svgEl('type_' + pin + '_dht').style.opacity = 1;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
-        svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-        svgdEl('type_' + pin + '_dht').style.opacity = 1;
     } else if (mode === "onewire") {
         svgEl('direction_' + pin + '_i').style.opacity = 1;
         svgEl('direction_' + pin + '_o').style.opacity = 1;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
         svgEl('type_' + pin + '_onewire').style.opacity = 1;
         svgEl('type_' + pin + '_dht').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
-        svgdEl('type_' + pin + '_onewire').style.opacity = 1;
-        svgdEl('type_' + pin + '_dht').style.opacity = 0;
     } else if (mode === "NC") {
         svgEl('direction_' + pin + '_i').style.opacity = 0;
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
         svgEl('type_' + pin + '_onewire').style.opacity = 0;
         svgEl('type_' + pin + '_dht').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_i').style.opacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
-        svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-        svgdEl('type_' + pin + '_dht').style.opacity = 0;
     }
     
     if (mode === "i_3") {
@@ -497,7 +432,6 @@ function jumersOneWire() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    svgdGen();
 }
 
 function jumersUART() {
@@ -529,24 +463,6 @@ function jumersUART() {
         svgEl('type_pin8_rs485').style.opacity = 0;
         svgEl('type_pin7_digital').style.opacity = 0;
         svgEl('type_pin8_digital').style.opacity = 0;
-
-        svgdEl('jumper_RX_UART').style.opacity = 1;
-        svgdEl('jumper_TX_UART').style.opacity = 1;
-        svgdEl('jumper_RX_RS485').style.opacity = 0;
-        svgdEl('jumper_TX_RS485').style.opacity = 0;
-        svgdEl('jumper_RS485_A').style.fillOpacity = 0;
-        svgdEl('jumper_RS485_B').style.fillOpacity = 0;
-        svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
-        svgdEl('direction_pin7_o').style.opacity = 1;
-        svgdEl('direction_pin7_i').style.opacity = 0;
-        svgdEl('direction_pin8_o').style.opacity = 0;
-        svgdEl('direction_pin8_i').style.opacity = 1;
-        svgdEl('type_pin7_uart').style.opacity = 1;
-        svgdEl('type_pin8_uart').style.opacity = 1;
-        svgdEl('type_pin7_rs485').style.opacity = 0;
-        svgdEl('type_pin8_rs485').style.opacity = 0;
-        svgdEl('type_pin7_digital').style.opacity = 0;
-        svgdEl('type_pin8_digital').style.opacity = 0;
         if (pin === 'pin7' && (!htmlEl('pin8_UART').checked)) {
             htmlEl('pin8_UART').click();
         }
@@ -571,24 +487,6 @@ function jumersUART() {
         svgEl('type_pin8_rs485').style.opacity = 1;
         svgEl('type_pin7_digital').style.opacity = 0;
         svgEl('type_pin8_digital').style.opacity = 0;
-
-        svgdEl('jumper_RX_UART').style.opacity = 0;
-        svgdEl('jumper_TX_UART').style.opacity = 0;
-        svgdEl('jumper_RX_RS485').style.opacity = 1;
-        svgdEl('jumper_TX_RS485').style.opacity = 1;
-        svgdEl('jumper_RS485_A').style.fillOpacity = 1;
-        svgdEl('jumper_RS485_B').style.fillOpacity = 1;
-        svgdEl('jumper_CTRL_RS485').style.fillOpacity = 1;
-        svgdEl('direction_pin7_o').style.opacity = 1;
-        svgdEl('direction_pin7_i').style.opacity = 1;
-        svgdEl('direction_pin8_o').style.opacity = 1;
-        svgdEl('direction_pin8_i').style.opacity = 1;
-        svgdEl('type_pin7_uart').style.opacity = 0;
-        svgdEl('type_pin8_uart').style.opacity = 0;
-        svgdEl('type_pin7_rs485').style.opacity = 1;
-        svgdEl('type_pin8_rs485').style.opacity = 1;
-        svgdEl('type_pin7_digital').style.opacity = 0;
-        svgdEl('type_pin8_digital').style.opacity = 0;
         if (pin === 'pin7' && (!htmlEl('pin8_RS485').checked)) {
             htmlEl('pin8_RS485').click();
         }
@@ -598,11 +496,9 @@ function jumersUART() {
     } else if (mode === "i_3" || mode === "o_3") {
         if (pin === 'pin8') {
             svgEl('jumper_RX_UART').style.opacity = 1;
-            svgdEl('jumper_RX_UART').style.opacity = 1;
         }
         if (pin === 'pin7') {
             svgEl('jumper_TX_UART').style.opacity = 1;
-            svgdEl('jumper_TX_UART').style.opacity = 1;
         }
         svgEl('jumper_RX_RS485').style.opacity = 0;
         svgEl('jumper_TX_RS485').style.opacity = 0;
@@ -614,17 +510,6 @@ function jumersUART() {
         svgEl('type_' + pin + '_uart').style.opacity = 0;
         svgEl('type_' + pin + '_rs485').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 1;
-
-        svgdEl('jumper_RX_RS485').style.opacity = 0;
-        svgdEl('jumper_TX_RS485').style.opacity = 0;
-        svgdEl('jumper_RS485_A').style.fillOpacity = 0;
-        svgdEl('jumper_RS485_B').style.fillOpacity = 0;
-        svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
-        svgdEl('direction_' + pin + '_i').style.opacity = (mode === "i_3") ? 1 : 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = (mode === "o_3") ? 1 : 0;
-        svgdEl('type_' + pin + '_uart').style.opacity = 0;
-        svgdEl('type_' + pin + '_rs485').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 1;
         if (pin === 'pin7' && (htmlEl('pin8_RS485').checked || htmlEl('pin8_UART').checked)) {
             htmlEl('pin8_NC').click();
         }
@@ -634,11 +519,9 @@ function jumersUART() {
     } else if (mode === "NC") {
         if (pin === 'pin8') {
             svgEl('jumper_RX_UART').style.opacity = 0;
-            svgdEl('jumper_RX_UART').style.opacity = 0;
         }
         if (pin === 'pin7') {
             svgEl('jumper_TX_UART').style.opacity = 0;
-            svgdEl('jumper_TX_UART').style.opacity = 0;
         }
         svgEl('jumper_RX_RS485').style.opacity = 0;
         svgEl('jumper_TX_RS485').style.opacity = 0;
@@ -650,17 +533,6 @@ function jumersUART() {
         svgEl('type_' + pin + '_uart').style.opacity = 0;
         svgEl('type_' + pin + '_rs485').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
-
-        svgdEl('jumper_RX_RS485').style.opacity = 0;
-        svgdEl('jumper_TX_RS485').style.opacity = 0;
-        svgdEl('jumper_RS485_A').style.fillOpacity = 0;
-        svgdEl('jumper_RS485_B').style.fillOpacity = 0;
-        svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
-        svgdEl('direction_' + pin + '_i').style.opacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('type_' + pin + '_uart').style.opacity = 0;
-        svgdEl('type_' + pin + '_rs485').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
 
         if (pin === 'pin7' && (htmlEl('pin8_RS485').checked || htmlEl('pin8_UART').checked)) {
             htmlEl('pin8_NC').click();
@@ -685,7 +557,6 @@ function jumersUART() {
     updateParamsUI(pin, group);
     updateSetting(pin, group, mode);
     updateCode();
-    svgdGen();
 }
 
 // Prototypes
@@ -697,7 +568,7 @@ if (!NodeList.prototype.forEach) NodeList.prototype.forEach = Array.prototype.fo
 for (var n = 3; n <= 6; n++)
     pinModesEls('pin' + n, function(el) { el.onclick = jumersADC; });
 for (var n = 7; n <= 8; n++)
-    pinModesEls('pin' + n, function(el) { el.onclick = jumersUART; });
+    pinModesEls('pin' + n, function(el) { el.onclick = jumersUART;});
 for (var n = 13; n <= 16; n++)
     pinModesEls('pin' + n, function(el) { el.onclick = jumersPWM; });
 pinModesEls('pin3pwm', function(el) { el.onclick = jumersPWM0; });
@@ -822,62 +693,321 @@ function updateCode() {
     htmlEl('notes').innerHTML = ("\n" + ret.notes + "\n").replace(/\n-([^\n]*)\n/g, '\n<li>$1</li>\n');
 }
 
-function svgdGen() {
+function svgdGen(pinNum, display) {
+
+
     var anyDevice = false;
-    var buttonLegs = []; // this array contains current selected leg for button. This will be helpful when we want hide layer with button
-    var pressureLegs = [];
-    var contactorLegs = [];
+    var deviceCount = 0;
+
+    var buttonLegs = [], // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
+        pressureLegs = [],
+        contactorLegs = [];
     var LED = undefined;
 
-    // As way for solution can be switch construction. When we call this function we send argument what will select needed case for generate pages
+    if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
+        var mode = pins[pinNum]['type'],
+            pin  = 'pin' + pinNum;
 
-    for (var i = 3; i <= 16; i++) {
-        try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
-            if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+        if (pinNum == 3) {
+            if (mode === "PWM" && display) {
+                svgdEl('jumper_' + pin + 'pwm').style.fillOpacity = 1;
+                svgdEl('direction_' + pin + 'pwm' + '_o').style.opacity = 1;
+                svgdEl('type_' + pin + 'pwm' + '_pwm').style.opacity = 1;
+                svgdEl('layer11').style.display = 'block';
+            } else if (mode === "NC" || !display) {
+                svgdEl('jumper_' + pin + 'pwm').style.fillOpacity = 0;
+                svgdEl('direction_' + pin + 'pwm' + '_o').style.opacity = 0;
+                svgdEl('type_' + pin + 'pwm' + '_pwm').style.opacity = 0;
+                svgdEl('layer11').style.display = 'none';
+            }
+        }
 
-            if (pins[i]['type'] != 'NC') anyDevice = true;
+        if (pinNum >= 3 && pinNum <= 6) {
+            if (mode === "i_3" || mode === "o_3" || mode === "ADC_i_3") {
+                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 1;
+                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 0;
+                svgdEl('direction_' + pin + '_o').style.opacity = (mode === "o_3") ? 1 : 0;
+                svgdEl('direction_' + pin + '_i').style.opacity = (mode === "o_3") ? 0 : 1;
+                svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_3") ? 1 : 0;
+                svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_3") ? 0 : 1;
+            } else if (mode === "ADC_i_5" || mode === "i_5") {
+                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 1;
+                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 1;
+                svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                svgdEl('direction_' + pin + '_i').style.opacity = 1;
+                svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_5") ? 1 : 0;
+                svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_5") ? 0 : 1;
+            } else if (mode === "ADC_i_12" || mode === "i_12") {
+                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 1;
+                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 1;
+                svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                svgdEl('direction_' + pin + '_i').style.opacity = 1;
+                svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_12") ? 1 : 0;
+                svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_12") ? 0 : 1;
+            } else if (mode === "NC") {
+                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
+                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 0;
+                svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                svgdEl('direction_' + pin + '_i').style.opacity = 0;
+                svgdEl('type_' + pin + '_analog').style.opacity = 0;
+                svgdEl('type_' + pin + '_digital').style.opacity = 0;
+            }
+        }
 
-            // Buttons
-            try {
-                // LED strip 
-                if (pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || 
-                    pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') { LED = true; }
+        switch(pinNum) { // layers
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                // Buttons
+                for (var i = 3; i < 13; i++) {
+                    if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
 
-                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
-                    svgdEl('layer7').style.display = "block";
-                    svgdEl('leg_pin' + i + '_button').style.opacity = 1;
+                    if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
+                        svgdEl('layer7').style.display = "block";
+                        svgdEl('leg_pin' + i + '_button').style.opacity = 1;
 
-                    buttonLegs.push(i);
-                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
-                        svgdEl('leg_pin' + i + '_button').style.opacity = 0;
+                        buttonLegs.push(i);
+                    } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
+                            svgdEl('leg_pin' + i + '_button').style.opacity = 0;
 
-                        if (i in buttonLegs) buttonLegs = -1;
+                            if (i in buttonLegs) buttonLegs = -1;
+                    }
                 }
+                break;
 
-                // DHT
-                if (pins[i]['type'] == 'DHT') {
-                    svgdEl('layer14').style.display = "block";
-                    svgdEl('leg_pin' + i + '_DHT').style.opacity = 1;
-                } else if (pins[i]['type'] != 'DHT') {
-                    svgdEl('leg_pin' + i + '_DHT').style.opacity = 0;
-                }
-                if ((pins[11]['type'] != 'DHT') && (pins[12]['type'] != 'DHT')) {
-                    svgdEl('layer14').style.display = "none";
-                }
+            case 7:
+                break;
 
+            case 8:
+                break;
+
+            case 11:
                 // DS18B20
                 if (pins[11]['type'] == 'DS18B20') {
                     svgdEl('layer13').style.display = "block";
                 } else if (pins[11]['type'] != 'DS18B20') {
                     svgdEl('layer13').style.display = "none";
                 }
+            case 12:
+                // DHT
+                if (pins[pinNum]['type'] == 'DHT') {
+                    svgdEl('layer14').style.display = "block";
+                    svgdEl('leg_pin' + pinNum + '_DHT').style.opacity = 1;
+                } else if (pins[pinNum]['type'] != 'DHT') {
+                    svgdEl('leg_pin' + pinNum + '_DHT').style.opacity = 0;
+                }
+                if ((pins[11]['type'] != 'DHT') && (pins[12]['type'] != 'DHT')) {
+                    svgdEl('layer14').style.display = "none";
+                }
+                break;
+
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+                // LED strip 
+                if (pins[pinNum]['params']['1'] == 'red' || pins[pinNum]['params']['1'] == 'green' || 
+                    pins[pinNum]['params']['1'] == 'blue' || pins[pinNum]['params']['1'] == 'white') { LED = true; }
 
                 // Contactor
-                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'single')) {
+                if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'single')) {
                     svgdEl('layer12').style.display = 'block';
-                } else if (true) {}
+                } else if (true) {
 
-            } catch (e) {} // this way should be selected if we don't have this svg element
+                }
+                break;
+            case -1:
+                for (var i = 3; i < 15; i++) {
+                    if (i == 10 || i == 11) { i = 12 };
+                    svgdEl('layer' + i).style.display = 'none';
+                }
+                break;
+            default:
+                console.log("Wrong pinNum argument:" + pinNum);
+                break;
+        }
+
+
+
+        if (pinNum == )
+
+        switch(pinNum) { // types and directions 
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                break;
+
+            case 7: // if uart or rs485 this will need to call 2 times
+            case 8:
+                if (mode === "UART") {
+                    svgdEl('jumper_RX_UART').style.opacity = 1;
+                    svgdEl('jumper_TX_UART').style.opacity = 1;
+                    svgdEl('jumper_RX_RS485').style.opacity = 0;
+                    svgdEl('jumper_TX_RS485').style.opacity = 0;
+                    svgdEl('jumper_RS485_A').style.fillOpacity = 0;
+                    svgdEl('jumper_RS485_B').style.fillOpacity = 0;
+                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
+                    svgdEl('direction_pin7_o').style.opacity = 1;
+                    svgdEl('direction_pin7_i').style.opacity = 0;
+                    svgdEl('direction_pin8_o').style.opacity = 0;
+                    svgdEl('direction_pin8_i').style.opacity = 1;
+                    svgdEl('type_pin7_uart').style.opacity = 1;
+                    svgdEl('type_pin8_uart').style.opacity = 1;
+                    svgdEl('type_pin7_rs485').style.opacity = 0;
+                    svgdEl('type_pin8_rs485').style.opacity = 0;
+                    svgdEl('type_pin7_digital').style.opacity = 0;
+                    svgdEl('type_pin8_digital').style.opacity = 0;
+                } else if (mode === "RS485") {
+                    svgdEl('jumper_RX_UART').style.opacity = 0;
+                    svgdEl('jumper_TX_UART').style.opacity = 0;
+                    svgdEl('jumper_RX_RS485').style.opacity = 1;
+                    svgdEl('jumper_TX_RS485').style.opacity = 1;
+                    svgdEl('jumper_RS485_A').style.fillOpacity = 1;
+                    svgdEl('jumper_RS485_B').style.fillOpacity = 1;
+                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 1;
+                    svgdEl('direction_pin7_o').style.opacity = 1;
+                    svgdEl('direction_pin7_i').style.opacity = 1;
+                    svgdEl('direction_pin8_o').style.opacity = 1;
+                    svgdEl('direction_pin8_i').style.opacity = 1;
+                    svgdEl('type_pin7_uart').style.opacity = 0;
+                    svgdEl('type_pin8_uart').style.opacity = 0;
+                    svgdEl('type_pin7_rs485').style.opacity = 1;
+                    svgdEl('type_pin8_rs485').style.opacity = 1;
+                    svgdEl('type_pin7_digital').style.opacity = 0;
+                    svgdEl('type_pin8_digital').style.opacity = 0;
+                } else if (mode === "i_3" || mode === "o_3") {
+                    if (pin === 'pin8' || pin === 'pin7') {
+                        svgdEl('jumper_RX_UART').style.opacity = 1;
+                        svgdEl('jumper_TX_UART').style.opacity = 1;
+                    }
+                    svgdEl('jumper_RX_RS485').style.opacity = 0;
+                    svgdEl('jumper_TX_RS485').style.opacity = 0;
+                    svgdEl('jumper_RS485_A').style.fillOpacity = 0;
+                    svgdEl('jumper_RS485_B').style.fillOpacity = 0;
+                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
+                    svgdEl('direction_' + pin + '_i').style.opacity = (mode === "i_3") ? 1 : 0;
+                    svgdEl('direction_' + pin + '_o').style.opacity = (mode === "o_3") ? 1 : 0;
+                    svgdEl('type_' + pin + '_uart').style.opacity = 0;
+                    svgdEl('type_' + pin + '_rs485').style.opacity = 0;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
+                } else if (mode === "NC") {
+                    if (pin === 'pin8' || pin === 'pin7') {
+                        svgdEl('jumper_RX_UART').style.opacity = 0;
+                        svgdEl('jumper_TX_UART').style.opacity = 0;
+                    }
+                    svgdEl('jumper_RX_RS485').style.opacity = 0;
+                    svgdEl('jumper_TX_RS485').style.opacity = 0;
+                    svgdEl('jumper_RS485_A').style.fillOpacity = 0;
+                    svgdEl('jumper_RS485_B').style.fillOpacity = 0;
+                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
+                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                    svgdEl('type_' + pin + '_uart').style.opacity = 0;
+                    svgdEl('type_' + pin + '_rs485').style.opacity = 0;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
+                }
+
+                break;
+
+            case 11:
+                if (mode === "SwitchBinary") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
+                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
+                } else if (mode === "SensorBinary") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
+                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
+                } else if (mode === "DHT") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
+                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 1;
+                } else if (mode === "DS18B20") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
+                    svgdEl('type_' + pin + '_onewire').style.opacity = 1;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
+                } else if (mode === "NC") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
+                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
+                }
+                break;
+
+            case 12:
+                if (mode === "SwitchBinary") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
+                } else if (mode === "SensorBinary") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
+                } else if (mode === "DHT") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 1;
+                } else if (mode === "NC") {
+                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
+                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
+                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
+                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
+                }
+                break;
+
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+                break;
+
+            case -1:
+                for (var i = 3; i < 15; i++) {
+                    if (i == 10 || i == 11) { i = 12 };
+
+                }
+                break;
+
+            default:
+                console.log("Wrong pinNum argument:" + pinNum);
+                break;
+        }
+        
+    }
+
+    for (var i = 3; i <= 16; i++) {
+            if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+
+        try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
+            if (pins[i]['type'] != 'NC') {
+                anyDevice = true;
+                deviceCount ++;
+            }
         } catch(e) {}
     }
 
@@ -930,3 +1060,9 @@ function addManualPages(pages) {
 }
 
 //addManualPages();
+//svgdGen()
+function svgdGenLoad() {
+    for (var i = 3; i < 17; i++) {
+        svgdGen(i, false);
+    }
+}
