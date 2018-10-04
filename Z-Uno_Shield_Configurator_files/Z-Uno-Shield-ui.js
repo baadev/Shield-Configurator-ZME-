@@ -3,9 +3,6 @@
 function svgEl(id, obj) { 
     return document.getElementById(obj ? obj : 'obj').contentDocument.getElementById(id);
 }
-function svgdEl(id) {
-    return document.getElementById('obj_2').contentDocument.getElementById(id);
-}
 
 function htmlEl(id) {
     return document.getElementById(id);
@@ -156,14 +153,10 @@ function jumersADC() {
         svgEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_3") ? 0 : 1;
 
 
-        svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 1;
-        svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = (mode === "o_3") ? 1 : 0;
-        svgdEl('direction_' + pin + '_i').style.opacity = (mode === "o_3") ? 0 : 1;
-        svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_3") ? 1 : 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_3") ? 0 : 1;
+        svgEl('jumper_' + pin + '_io_3', 'obj_2').style.fillOpacity = 1;
+        svgEl('jumper_' + pin + '_i_5', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_12', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_5_12', 'obj_2').style.fillOpacity = 0;
     } else if (mode === "ADC_i_5" || mode === "i_5") {
         svgEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
         svgEl('jumper_' + pin + '_i_5').style.fillOpacity = 1;
@@ -174,14 +167,10 @@ function jumersADC() {
         svgEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_5") ? 1 : 0;
         svgEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_5") ? 0 : 1;
 
-        svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 1;
-        svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('direction_' + pin + '_i').style.opacity = 1;
-        svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_5") ? 1 : 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_5") ? 0 : 1;
+        svgEl('jumper_' + pin + '_io_3', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_5', 'obj_2').style.fillOpacity = 1;
+        svgEl('jumper_' + pin + '_i_12', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_5_12', 'obj_2').style.fillOpacity = 1;
     } else if (mode === "ADC_i_12" || mode === "i_12") {
         svgEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
         svgEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
@@ -192,14 +181,10 @@ function jumersADC() {
         svgEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_12") ? 1 : 0;
         svgEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_12") ? 0 : 1;
 
-        svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 1;
-        svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 1;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('direction_' + pin + '_i').style.opacity = 1;
-        svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_12") ? 1 : 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_12") ? 0 : 1;
+        svgEl('jumper_' + pin + '_io_3', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_5', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_12', 'obj_2').style.fillOpacity = 1;
+        svgEl('jumper_' + pin + '_i_5_12', 'obj_2').style.fillOpacity = 1;
     } else if (mode === "NC") {
         svgEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
         svgEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
@@ -210,14 +195,10 @@ function jumersADC() {
         svgEl('type_' + pin + '_analog').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
 
-        svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
-        svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 0;
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('direction_' + pin + '_i').style.opacity = 0;
-        svgdEl('type_' + pin + '_analog').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
+        svgEl('jumper_' + pin + '_io_3', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_5', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_12', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_' + pin + '_i_5_12', 'obj_2').style.fillOpacity = 0;
     }
     
     if (pin === 'pin3') {
@@ -255,26 +236,14 @@ function jumersPWM() {
         svgEl('direction_' + pin + '_o').style.opacity = 1;
         svgEl('type_' + pin + '_pwm').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 1;
-
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_pwm').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 1;
     } else if (mode === "PWM") {
         svgEl('direction_' + pin + '_o').style.opacity = 1;
         svgEl('type_' + pin + '_pwm').style.opacity = 1;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_o').style.opacity = 1;
-        svgdEl('type_' + pin + '_pwm').style.opacity = 1;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
     } else if (mode === "NC") {
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_pwm').style.opacity = 0;
         svgEl('type_' + pin + '_digital').style.opacity = 0;
-
-        svgdEl('direction_' + pin + '_o').style.opacity = 0;
-        svgdEl('type_' + pin + '_pwm').style.opacity = 0;
-        svgdEl('type_' + pin + '_digital').style.opacity = 0;
     }
     
     if (mode === "o") {
@@ -303,12 +272,16 @@ function jumersPWM0() {
     
     if (mode === "PWM") {
         svgEl('jumper_' + pin).style.fillOpacity = 1;
+        svgEl('jumper_' + pin, 'obj_2').style.fillOpacity = 1;
+
         svgEl('direction_' + pin + '_o').style.opacity = 1;
         svgEl('type_' + pin + '_pwm').style.opacity = 1;
         htmlElsEna('pin3', false);
         htmlEl('pin3_disabled').style.display = 'block';
     } else if (mode === "NC") {
         svgEl('jumper_' + pin).style.fillOpacity = 0;
+        svgEl('jumper_' + pin, 'obj_2').style.fillOpacity = 0;
+
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_pwm').style.opacity = 0;
         htmlElsEna('pin3', true);
@@ -453,6 +426,15 @@ function jumersUART() {
         svgEl('jumper_RS485_A').style.fillOpacity = 0;
         svgEl('jumper_RS485_B').style.fillOpacity = 0;
         svgEl('jumper_CTRL_RS485').style.fillOpacity = 0;
+
+        svgEl('jumper_RX_UART', 'obj_2').style.opacity = 1;
+        svgEl('jumper_TX_UART', 'obj_2').style.opacity = 1;
+        svgEl('jumper_RX_RS485', 'obj_2').style.opacity = 0;
+        svgEl('jumper_TX_RS485', 'obj_2').style.opacity = 0;
+        svgEl('jumper_RS485_A', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_RS485_B', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_CTRL_RS485', 'obj_2').style.fillOpacity = 0;
+
         svgEl('direction_pin7_o').style.opacity = 1;
         svgEl('direction_pin7_i').style.opacity = 0;
         svgEl('direction_pin8_o').style.opacity = 0;
@@ -477,6 +459,15 @@ function jumersUART() {
         svgEl('jumper_RS485_A').style.fillOpacity = 1;
         svgEl('jumper_RS485_B').style.fillOpacity = 1;
         svgEl('jumper_CTRL_RS485').style.fillOpacity = 1;
+
+        svgEl('jumper_RX_UART', 'obj_2').style.opacity = 0;
+        svgEl('jumper_TX_UART', 'obj_2').style.opacity = 0;
+        svgEl('jumper_RX_RS485', 'obj_2').style.opacity = 1;
+        svgEl('jumper_TX_RS485', 'obj_2').style.opacity = 1;
+        svgEl('jumper_RS485_A', 'obj_2').style.fillOpacity = 1;
+        svgEl('jumper_RS485_B', 'obj_2').style.fillOpacity = 1;
+        svgEl('jumper_CTRL_RS485', 'obj_2').style.fillOpacity = 1;
+
         svgEl('direction_pin7_o').style.opacity = 1;
         svgEl('direction_pin7_i').style.opacity = 1;
         svgEl('direction_pin8_o').style.opacity = 1;
@@ -496,15 +487,24 @@ function jumersUART() {
     } else if (mode === "i_3" || mode === "o_3") {
         if (pin === 'pin8') {
             svgEl('jumper_RX_UART').style.opacity = 1;
+            svgEl('jumper_RX_UART', 'obj_2').style.opacity = 1;
         }
         if (pin === 'pin7') {
             svgEl('jumper_TX_UART').style.opacity = 1;
+            svgEl('jumper_TX_UART', 'obj_2').style.opacity = 1;
         }
         svgEl('jumper_RX_RS485').style.opacity = 0;
         svgEl('jumper_TX_RS485').style.opacity = 0;
         svgEl('jumper_RS485_A').style.fillOpacity = 0;
         svgEl('jumper_RS485_B').style.fillOpacity = 0;
         svgEl('jumper_CTRL_RS485').style.fillOpacity = 0;
+        
+        svgEl('jumper_RX_RS485', 'obj_2').style.opacity = 0;
+        svgEl('jumper_TX_RS485', 'obj_2').style.opacity = 0;
+        svgEl('jumper_RS485_A', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_RS485_B', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_CTRL_RS485', 'obj_2').style.fillOpacity = 0;
+
         svgEl('direction_' + pin + '_i').style.opacity = (mode === "i_3") ? 1 : 0;
         svgEl('direction_' + pin + '_o').style.opacity = (mode === "o_3") ? 1 : 0;
         svgEl('type_' + pin + '_uart').style.opacity = 0;
@@ -519,15 +519,24 @@ function jumersUART() {
     } else if (mode === "NC") {
         if (pin === 'pin8') {
             svgEl('jumper_RX_UART').style.opacity = 0;
+            svgEl('jumper_RX_UART', 'obj_2').style.opacity = 0;
         }
         if (pin === 'pin7') {
             svgEl('jumper_TX_UART').style.opacity = 0;
+            svgEl('jumper_TX_UART', 'obj_2').style.opacity = 0;
         }
         svgEl('jumper_RX_RS485').style.opacity = 0;
         svgEl('jumper_TX_RS485').style.opacity = 0;
         svgEl('jumper_RS485_A').style.fillOpacity = 0;
         svgEl('jumper_RS485_B').style.fillOpacity = 0;
         svgEl('jumper_CTRL_RS485').style.fillOpacity = 0;
+
+        svgEl('jumper_RX_RS485', 'obj_2').style.opacity = 0;
+        svgEl('jumper_TX_RS485', 'obj_2').style.opacity = 0;
+        svgEl('jumper_RS485_A', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_RS485_B', 'obj_2').style.fillOpacity = 0;
+        svgEl('jumper_CTRL_RS485', 'obj_2').style.fillOpacity = 0;
+        
         svgEl('direction_' + pin + '_i').style.opacity = 0;
         svgEl('direction_' + pin + '_o').style.opacity = 0;
         svgEl('type_' + pin + '_uart').style.opacity = 0;
@@ -623,11 +632,11 @@ htmlEl('obj_2').onload = function() {
     ['pin3pwm', 'pin3', 'pin4', 'pin5', 'pin6', 'pin7', 'pin8', 'pin11', 'pin12', 'pin13', 'pin14', 'pin15', 'pin16'].forEach(function(pin) {
         htmlEl('settings_' + pin).onmouseover = function() {
             svgEl('connector_' + pin).style.fill = 'yellow';
-            svgdEl('connector_' + pin).style.fill = 'yellow';
+            svgEl('connector_' + pin, 'obj_2').style.fill = 'yellow';
         };
         htmlEl('settings_' + pin).onmouseout = function() {
             svgEl('connector_' + pin).style.fill = '#358800';
-            svgdEl('connector_' + pin).style.fill = '#358800';
+            svgEl('connector_' + pin, 'obj_2').style.fill = '#358800';
         };
     });
     
@@ -694,8 +703,6 @@ function updateCode() {
 }
 
 function svgdGen(pinNum, display) {
-
-
     var anyDevice = false;
     var deviceCount = 0;
 
@@ -708,58 +715,8 @@ function svgdGen(pinNum, display) {
         var mode = pins[pinNum]['type'],
             pin  = 'pin' + pinNum;
 
-        if (pinNum == 3) {
-            if (mode === "PWM" && display) {
-                svgdEl('jumper_' + pin + 'pwm').style.fillOpacity = 1;
-                svgdEl('direction_' + pin + 'pwm' + '_o').style.opacity = 1;
-                svgdEl('type_' + pin + 'pwm' + '_pwm').style.opacity = 1;
-                svgdEl('layer11').style.display = 'block';
-            } else if (mode === "NC" || !display) {
-                svgdEl('jumper_' + pin + 'pwm').style.fillOpacity = 0;
-                svgdEl('direction_' + pin + 'pwm' + '_o').style.opacity = 0;
-                svgdEl('type_' + pin + 'pwm' + '_pwm').style.opacity = 0;
-                svgdEl('layer11').style.display = 'none';
-            }
-        }
-
         if (pinNum >= 3 && pinNum <= 6) {
-            if (mode === "i_3" || mode === "o_3" || mode === "ADC_i_3") {
-                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 1;
-                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 0;
-                svgdEl('direction_' + pin + '_o').style.opacity = (mode === "o_3") ? 1 : 0;
-                svgdEl('direction_' + pin + '_i').style.opacity = (mode === "o_3") ? 0 : 1;
-                svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_3") ? 1 : 0;
-                svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_3") ? 0 : 1;
-            } else if (mode === "ADC_i_5" || mode === "i_5") {
-                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 1;
-                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 1;
-                svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                svgdEl('direction_' + pin + '_i').style.opacity = 1;
-                svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_5") ? 1 : 0;
-                svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_5") ? 0 : 1;
-            } else if (mode === "ADC_i_12" || mode === "i_12") {
-                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 1;
-                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 1;
-                svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                svgdEl('direction_' + pin + '_i').style.opacity = 1;
-                svgdEl('type_' + pin + '_analog').style.opacity = (mode === "ADC_i_12") ? 1 : 0;
-                svgdEl('type_' + pin + '_digital').style.opacity = (mode === "ADC_i_12") ? 0 : 1;
-            } else if (mode === "NC") {
-                svgdEl('jumper_' + pin + '_io_3').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_5').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_12').style.fillOpacity = 0;
-                svgdEl('jumper_' + pin + '_i_5_12').style.fillOpacity = 0;
-                svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                svgdEl('direction_' + pin + '_i').style.opacity = 0;
-                svgdEl('type_' + pin + '_analog').style.opacity = 0;
-                svgdEl('type_' + pin + '_digital').style.opacity = 0;
-            }
+
         }
 
         switch(pinNum) { // layers
@@ -775,12 +732,12 @@ function svgdGen(pinNum, display) {
                     if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
 
                     if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) {        
-                        svgdEl('layer7').style.display = "block";
-                        svgdEl('leg_pin' + i + '_button').style.opacity = 1;
+                        svgEl('layer7', 'obj_2').style.display = "block";
+                        svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 1;
 
                         buttonLegs.push(i);
                     } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
-                            svgdEl('leg_pin' + i + '_button').style.opacity = 0;
+                            svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
 
                             if (i in buttonLegs) buttonLegs = -1;
                     }
@@ -796,20 +753,20 @@ function svgdGen(pinNum, display) {
             case 11:
                 // DS18B20
                 if (pins[11]['type'] == 'DS18B20') {
-                    svgdEl('layer13').style.display = "block";
+                    svgEl('layer13', 'obj_2').style.display = "block";
                 } else if (pins[11]['type'] != 'DS18B20') {
-                    svgdEl('layer13').style.display = "none";
+                    svgEl('layer13', 'obj_2').style.display = "none";
                 }
             case 12:
                 // DHT
                 if (pins[pinNum]['type'] == 'DHT') {
-                    svgdEl('layer14').style.display = "block";
-                    svgdEl('leg_pin' + pinNum + '_DHT').style.opacity = 1;
+                    svgEl('layer14', 'obj_2').style.display = "block";
+                    svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
                 } else if (pins[pinNum]['type'] != 'DHT') {
-                    svgdEl('leg_pin' + pinNum + '_DHT').style.opacity = 0;
+                    svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
                 }
                 if ((pins[11]['type'] != 'DHT') && (pins[12]['type'] != 'DHT')) {
-                    svgdEl('layer14').style.display = "none";
+                    svgEl('layer14', 'obj_2').style.display = "none";
                 }
                 break;
 
@@ -823,7 +780,7 @@ function svgdGen(pinNum, display) {
 
                 // Contactor
                 if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'single')) {
-                    svgdEl('layer12').style.display = 'block';
+                    svgEl('layer12', 'obj_2').style.display = 'block';
                 } else if (true) {
 
                 }
@@ -831,174 +788,16 @@ function svgdGen(pinNum, display) {
             case -1:
                 for (var i = 3; i < 15; i++) {
                     if (i == 10 || i == 11) { i = 12 };
-                    svgdEl('layer' + i).style.display = 'none';
+                    svgEl('layer' + i, 'obj_2').style.display = 'none';
                 }
                 break;
             default:
                 console.log("Wrong pinNum argument:" + pinNum);
                 break;
         }
-
-
-
-        if (pinNum == )
-
-        switch(pinNum) { // types and directions 
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                break;
-
-            case 7: // if uart or rs485 this will need to call 2 times
-            case 8:
-                if (mode === "UART") {
-                    svgdEl('jumper_RX_UART').style.opacity = 1;
-                    svgdEl('jumper_TX_UART').style.opacity = 1;
-                    svgdEl('jumper_RX_RS485').style.opacity = 0;
-                    svgdEl('jumper_TX_RS485').style.opacity = 0;
-                    svgdEl('jumper_RS485_A').style.fillOpacity = 0;
-                    svgdEl('jumper_RS485_B').style.fillOpacity = 0;
-                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
-                    svgdEl('direction_pin7_o').style.opacity = 1;
-                    svgdEl('direction_pin7_i').style.opacity = 0;
-                    svgdEl('direction_pin8_o').style.opacity = 0;
-                    svgdEl('direction_pin8_i').style.opacity = 1;
-                    svgdEl('type_pin7_uart').style.opacity = 1;
-                    svgdEl('type_pin8_uart').style.opacity = 1;
-                    svgdEl('type_pin7_rs485').style.opacity = 0;
-                    svgdEl('type_pin8_rs485').style.opacity = 0;
-                    svgdEl('type_pin7_digital').style.opacity = 0;
-                    svgdEl('type_pin8_digital').style.opacity = 0;
-                } else if (mode === "RS485") {
-                    svgdEl('jumper_RX_UART').style.opacity = 0;
-                    svgdEl('jumper_TX_UART').style.opacity = 0;
-                    svgdEl('jumper_RX_RS485').style.opacity = 1;
-                    svgdEl('jumper_TX_RS485').style.opacity = 1;
-                    svgdEl('jumper_RS485_A').style.fillOpacity = 1;
-                    svgdEl('jumper_RS485_B').style.fillOpacity = 1;
-                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 1;
-                    svgdEl('direction_pin7_o').style.opacity = 1;
-                    svgdEl('direction_pin7_i').style.opacity = 1;
-                    svgdEl('direction_pin8_o').style.opacity = 1;
-                    svgdEl('direction_pin8_i').style.opacity = 1;
-                    svgdEl('type_pin7_uart').style.opacity = 0;
-                    svgdEl('type_pin8_uart').style.opacity = 0;
-                    svgdEl('type_pin7_rs485').style.opacity = 1;
-                    svgdEl('type_pin8_rs485').style.opacity = 1;
-                    svgdEl('type_pin7_digital').style.opacity = 0;
-                    svgdEl('type_pin8_digital').style.opacity = 0;
-                } else if (mode === "i_3" || mode === "o_3") {
-                    if (pin === 'pin8' || pin === 'pin7') {
-                        svgdEl('jumper_RX_UART').style.opacity = 1;
-                        svgdEl('jumper_TX_UART').style.opacity = 1;
-                    }
-                    svgdEl('jumper_RX_RS485').style.opacity = 0;
-                    svgdEl('jumper_TX_RS485').style.opacity = 0;
-                    svgdEl('jumper_RS485_A').style.fillOpacity = 0;
-                    svgdEl('jumper_RS485_B').style.fillOpacity = 0;
-                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
-                    svgdEl('direction_' + pin + '_i').style.opacity = (mode === "i_3") ? 1 : 0;
-                    svgdEl('direction_' + pin + '_o').style.opacity = (mode === "o_3") ? 1 : 0;
-                    svgdEl('type_' + pin + '_uart').style.opacity = 0;
-                    svgdEl('type_' + pin + '_rs485').style.opacity = 0;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
-                } else if (mode === "NC") {
-                    if (pin === 'pin8' || pin === 'pin7') {
-                        svgdEl('jumper_RX_UART').style.opacity = 0;
-                        svgdEl('jumper_TX_UART').style.opacity = 0;
-                    }
-                    svgdEl('jumper_RX_RS485').style.opacity = 0;
-                    svgdEl('jumper_TX_RS485').style.opacity = 0;
-                    svgdEl('jumper_RS485_A').style.fillOpacity = 0;
-                    svgdEl('jumper_RS485_B').style.fillOpacity = 0;
-                    svgdEl('jumper_CTRL_RS485').style.fillOpacity = 0;
-                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                    svgdEl('type_' + pin + '_uart').style.opacity = 0;
-                    svgdEl('type_' + pin + '_rs485').style.opacity = 0;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
-                }
-
-                break;
-
-            case 11:
-                if (mode === "SwitchBinary") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
-                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
-                } else if (mode === "SensorBinary") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
-                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
-                } else if (mode === "DHT") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
-                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 1;
-                } else if (mode === "DS18B20") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
-                    svgdEl('type_' + pin + '_onewire').style.opacity = 1;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
-                } else if (mode === "NC") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
-                    svgdEl('type_' + pin + '_onewire').style.opacity = 0;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
-                }
-                break;
-
-            case 12:
-                if (mode === "SwitchBinary") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
-                } else if (mode === "SensorBinary") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 1;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
-                } else if (mode === "DHT") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 1;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 1;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 1;
-                } else if (mode === "NC") {
-                    svgdEl('direction_' + pin + '_i').style.opacity = 0;
-                    svgdEl('direction_' + pin + '_o').style.opacity = 0;
-                    svgdEl('type_' + pin + '_digital').style.opacity = 0;
-                    svgdEl('type_' + pin + '_dht').style.opacity = 0;
-                }
-                break;
-
-            case 13:
-            case 14:
-            case 15:
-            case 16:
-                break;
-
-            case -1:
-                for (var i = 3; i < 15; i++) {
-                    if (i == 10 || i == 11) { i = 12 };
-
-                }
-                break;
-
-            default:
-                console.log("Wrong pinNum argument:" + pinNum);
-                break;
-        }
-        
     }
+
+
 
     for (var i = 3; i <= 16; i++) {
             if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
@@ -1013,18 +812,18 @@ function svgdGen(pinNum, display) {
 
     // Power supply select 
     if (anyDevice && (!LED) || (contactorLegs.length > 0)) { // if any device exists and device !LED we use small power supply  
-        svgdEl('layer1').style.display = "none"
-        svgdEl('layer11').style.display = "block";
+        svgEl('layer1', 'obj_2').style.display = "none"
+        svgEl('layer11', 'obj_2').style.display = "block";
     } else if (anyDevice && LED) { // if device is LED we use 180W power supply
-        svgdEl('layer11').style.display = "none"
-        svgdEl('layer1').style.display = "block"
+        svgEl('layer11', 'obj_2').style.display = "none"
+        svgEl('layer1', 'obj_2').style.display = "block"
     } else if (!anyDevice) {
-        svgdEl('layer1').style.display = "none"
-        svgdEl('layer11').style.display = "none";
+        svgEl('layer1', 'obj_2').style.display = "none"
+        svgEl('layer11', 'obj_2').style.display = "none";
     }
 
     if (buttonLegs.length == 0) {
-        svgdEl('layer7').style.display = "none";
+        svgEl('layer7', 'obj_2').style.display = "none";
     }
 }
 
@@ -1060,7 +859,6 @@ function addManualPages(pages) {
 }
 
 //addManualPages();
-//svgdGen()
 function svgdGenLoad() {
     for (var i = 3; i < 17; i++) {
         svgdGen(i, false);
