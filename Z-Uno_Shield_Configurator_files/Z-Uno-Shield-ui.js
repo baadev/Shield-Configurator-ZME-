@@ -698,17 +698,17 @@ function openTab(evt, tab) {
     // Tabcontrol part
     var i, tabcontent, tablinks;
 
-    tabcontent = document.getElementsByClassName("manual_tabcontent");
+    tabcontent = htmlCEl("manual_tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
 
-    tablinks = document.getElementsByClassName("manual_tablinks");
+    tablinks = htmlCEl("manual_tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" manual_active", "");
     }
 
-    document.getElementById(tab).style.display = "block";
+    htmlEl(tab).style.display = "block";
     evt.currentTarget.className += " manual_active";
 
     // SVG display part
@@ -719,13 +719,14 @@ function openTab(evt, tab) {
         svgdGen(-1, null, false);
         svgdGen(currentTarget, deviceType, true);
     }
+
     createManualPages();
 }
 
 function getDeviceType(i) {
-    if ((i >= 13 && i <= 16) && (pins[13]['params']['1'] == 'white') && (pins[i]['params'] != 'single')) {
+    if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] == 'white') && (pins[i]['params'] != 'single')) {
         return 'RGBWLED'
-    } else if ((pins[i]['type'] == 'SwitchMultilevel') && (i >= 13 && i <= 16) && (pins[13]['params']['1'] != 'white') && !(pins[i]['params'] != 'single')) {
+    } else if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] != 'white') && (pins[i]['params'] != 'single')) {
         return 'RGBLED'
     }
 
@@ -834,36 +835,37 @@ function svgdGen(pinNum, deviceType, display) {
         // TODO on html: make selector strip type: white, rbg, rgbw
         // White LED strip
         if (pinNum >= 13 && pinNum <= 16 && (deviceType == "single")) {
-            for (var i = 13; i <= 16; i++) {
-                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'single') && display) {
-                    svgEl('layer3', 'obj_2').style.display = 'block';
-                    svgEl('leg_pin' + i + '_led', 'obj_2').style.display = 'block';
+            if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'single') && display) {
+                svgEl('layer3', 'obj_2').style.display = 'block';
+                svgEl('leg_pin' + pinNum + '_led', 'obj_2').style.display = 'block';
 
-                    LED.push(i);
-                } else if ((pins[i]['type'] != 'SwitchMultilevel') || (pins[i]['params']['1'] != 'single')) {
-                    svgEl('leg_pin' + i + '_led', 'obj_2').style.display = 'none';
-                    
-                    if (i in LED) LED = -1;
-                }
+                LED.push(pinNum);
+            }
+
+            for (var i = 13; i <= 16; i++) {
+                if (i == pinNum) continue; 
+                if (i in LED) LED = -1;
+                
+                svgEl('leg_pin' + i + '_led', 'obj_2').style.display = 'none';
             }
         }
 
         // RGB LED strip
         if (pinNum >= 14 && pinNum <= 16 && (deviceType == "RGBLED")) {
+            if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'red' || 
+                pins[pinNum]['params']['1'] == 'green' || pins[pinNum]['params']['1'] == 'blue') && display) {
+
+                svgEl('layer4', 'obj_2').style.display = 'block';
+                svgEl('leg_pin' + pinNum + '_rgbled', 'obj_2').style.display = 'block';
+
+                RGBLED.push(pinNum);
+            }
+
             for (var i = 14; i <= 16; i++) {
-                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'red' || 
-                    pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && display) {
-
-                    svgEl('layer4', 'obj_2').style.display = 'block';
-                    svgEl('leg_pin' + i + '_rgbled', 'obj_2').style.display = 'block';
-
-                    RGBLED.push(i);
-                } else if ((pins[i]['type'] != 'SwitchMultilevel') || (pins[16]['params']['1'] != 'red' || 
-                    pins[15]['params']['1'] != 'green' || pins[14]['params']['1'] != 'blue')) {
-                    svgEl('leg_pin' + i + '_rgbled', 'obj_2').style.display = 'none';
-                    
-                    if (i in RGBLED) RGBLED = -1;
-                }
+                if (i == pinNum) continue;
+                if (i in RGBLED) RGBLED = -1;
+                
+                svgEl('leg_pin' + i + '_rgbled', 'obj_2').style.display = 'none';
             }
         }
 
@@ -945,13 +947,13 @@ function svgdGen(pinNum, deviceType, display) {
 
 // Issue with tabs for pin 3
 function createManualPages() {
-    var countOfButtons = document.getElementById("manual_pages_control").getElementsByTagName("button").length;
+    var countOfButtons = htmlEl("manual_pages_control").getElementsByTagName("button").length;
 
     for (var i = 3; i <= 16; i++) {
         if (i == 9) i = 11;
 
         try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
-            if (pins[i]['type'] != 'NC' && !document.getElementById('manual_page_' + i)) {
+            if (pins[i]['type'] != 'NC' && !htmlEl('manual_page_' + i)) {
                 countOfButtons++;
                 // add button
                 $("#manual_pages_control").append('<button class="manual_tablinks" id="manual_control_button_' + i + '" onclick="openTab(event, \'manual_page_' + i + '\')">' + 'pin #' + i + '</button>');
@@ -960,21 +962,19 @@ function createManualPages() {
                 $("#manual_page_" + i).append('<h3>Step for pin#' + i + '</h3>');
                 $("#manual_pages").append('</div>');
 
-            } else if (pins[i]['type'] == 'NC' && document.getElementById('manual_page_' + i)) {
+                generateContentOfTab(i);
+            } else if (pins[i]['type'] == 'NC' && htmlEl('manual_page_' + i)) {
                 $("#manual_control_button_" + i).remove();
                 $("#manual_page_" + i).remove();
             }
 
-            generateContentOfTab(i);
-            countOfButtons = document.getElementById("manual_pages_control").getElementsByTagName("button").length;
+            countOfButtons = htmlEl("manual_pages_control").getElementsByTagName("button").length;
         } catch(e) {}
     }
 }
 
 function generateContentOfTab(i) {    
-    $(".manual_step_p").remove();
     // Pressure
-
     
     if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_buttons"] + '</p>');
@@ -985,7 +985,7 @@ function generateContentOfTab(i) {
     } else if (pins[i]['type'] == 'DHT') { // DHT
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_DHT"] + '</p>');
 
-    }else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) { // Contactor
+    } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) { // Contactor
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_contactor"] + '</p>');
 
     } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) { // Reed Sensor       
