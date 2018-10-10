@@ -40,6 +40,8 @@ function updateSettings() {
         '?' + 
         Object.keys(params).map(function(key) { return key + '=' + params[key]; }).join('&')
     );
+
+    createManualPages();
 }
 
 function updateSetting(pin, group, mode) {
@@ -101,6 +103,7 @@ function updateParams() {
     updateSetting(pin, group, mode);
     updateParamsUI(pin, group);
     updateCode();
+    createManualPages();
 }
 
 function updateParamsUI(pin, group) {
@@ -135,8 +138,6 @@ function jumersADC() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
-    console.log(reg);
-
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -225,8 +226,6 @@ function jumersPWM() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
-    console.log(reg);
-
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -262,8 +261,6 @@ function jumersPWM() {
 function jumersPWM0() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
-    
-    console.log(reg);
 
     var group = this.id,
         pin = reg[1],
@@ -303,8 +300,6 @@ function jumersGPIO() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
-    console.log(reg);
-
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -351,8 +346,6 @@ function jumersOneWire() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
-    console.log(reg);
-
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -411,8 +404,6 @@ function jumersUART() {
     var reg = this.id.match(/^(pin([^_]+))_(.*)$/);
     if (!reg || reg.length < 3) return;
     
-    console.log(reg);
-
     var group = this.id,
         pin = reg[1],
         pinNum = reg[2],
@@ -702,110 +693,9 @@ function updateCode() {
     htmlEl('notes').innerHTML = ("\n" + ret.notes + "\n").replace(/\n-([^\n]*)\n/g, '\n<li>$1</li>\n');
 }
 
-function svgdGen(pinNum, deviceType, display) {
-    var anyDevice = false;
-    var deviceCount = 0;
 
-    var buttonLegs = [], // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
-        pressureLegs = [],
-        contactorLegs = [];
-    var LED = undefined;
-
-    if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
-        var mode = pins[pinNum]['type'],
-            pin  = 'pin' + pinNum;
-
-        // Pressure
-        if (pinNum >= 3 && pinNum <= 6) {
-
-        }
-
-        // Buttons
-        if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "button") {
-            for (var i = 3; i <= 12; i++) {
-                if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
-
-                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general') && display) {        
-                    svgEl('layer7', 'obj_2').style.display = "block";
-                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 1;
-
-                    buttonLegs.push(i);
-                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general') || !display) {
-                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
-
-                    if (i in buttonLegs) buttonLegs = -1;
-                }
-            }
-        }
-
-        // DS18B20
-        if (pinNum == 11 && deviceType == "DS18B20") {
-            if ((pins[11]['type'] == 'DS18B20') && display) {
-                svgEl('layer13', 'obj_2').style.display = "block";
-            } else if (pins[11]['type'] != 'DS18B20' || !display) {
-                svgEl('layer13', 'obj_2').style.display = "none";
-            }
-        }
-
-        // DHT
-        if (pinNum == 11 || pinNum == 12 && deviceType == "DHT") {
-            if ((pins[pinNum]['type'] == 'DHT') && display) {
-                svgEl('layer14', 'obj_2').style.display = "block";
-                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
-            } else if (pins[pinNum]['type'] != 'DHT') {
-                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
-            }
-            if (((pins[11]['type'] != 'DHT') && (pins[12]['type'] != 'DHT')) || !display) {
-                svgEl('layer14', 'obj_2').style.display = "none";
-            }            
-        }
-
-        // Contactor
-        if (pinNum >= 13 && pinNum <= 16 && (deviceType == "contactor")) {
-            if ((pins[pinNum]['type'] == 'SwitchBinary') && (pins[pinNum]['params']['1'] == 'switch') && display) {
-                svgEl('layer12', 'obj_2').style.display = 'block';
-                svgEl('leg_pin' + pinNum + '_contactor', 'obj_2').style.opacity = 1;
-            } else if (true) {
-
-            }
-        }
-
-        // LED strip 
-        if (pins[pinNum]['params']['1'] == 'red' || pins[pinNum]['params']['1'] == 'green' || 
-            pins[pinNum]['params']['1'] == 'blue' || pins[pinNum]['params']['1'] == 'white') { LED = true; }
-        
-    }   
-
-
-    for (var i = 3; i <= 16; i++) {
-            if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
-
-        try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
-            if (pins[i]['type'] != 'NC') {
-                anyDevice = true;
-                deviceCount ++;
-            }
-        } catch(e) {}
-    }
-
-    // Power supply select 
-    if (anyDevice && (!LED) || (contactorLegs.length > 0)) { // if any device exists and device !LED we use small power supply  
-        svgEl('layer1', 'obj_2').style.display = "none"
-        svgEl('layer11', 'obj_2').style.display = "block";
-    } else if (anyDevice && LED) { // if device is LED we use 180W power supply
-        svgEl('layer11', 'obj_2').style.display = "none"
-        svgEl('layer1', 'obj_2').style.display = "block"
-    } else if (!anyDevice) {
-        svgEl('layer1', 'obj_2').style.display = "none"
-        svgEl('layer11', 'obj_2').style.display = "none";
-    }
-
-    if (buttonLegs.length == 0) {
-        svgEl('layer7', 'obj_2').style.display = "none";
-    }
-}
-
-function openTab(evt, tabNum) {
+function openTab(evt, tab) {
+    // Tabcontrol part
     var i, tabcontent, tablinks;
 
     tabcontent = document.getElementsByClassName("manual_tabcontent");
@@ -818,28 +708,304 @@ function openTab(evt, tabNum) {
         tablinks[i].className = tablinks[i].className.replace(" manual_active", "");
     }
 
-    document.getElementById(tabNum).style.display = "block";
+    document.getElementById(tab).style.display = "block";
     evt.currentTarget.className += " manual_active";
+
+    // SVG display part
+    var currentTarget = parseInt(tab.replace(/[^0-9\.]/g, ''), 10);
+    if (currentTarget > 1) {
+        var deviceType = getDeviceType(currentTarget);
+
+        svgdGen(-1, null, false);
+        svgdGen(currentTarget, deviceType, true);
+    }
+    createManualPages();
 }
 
-function addManualPages(pages) {
-    var numToCreate = pages.length;
+function getDeviceType(i) {
+    if ((i >= 13 && i <= 16) && (pins[13]['params']['1'] == 'white') && (pins[i]['params'] != 'single')) {
+        return 'RGBWLED'
+    } else if ((pins[i]['type'] == 'SwitchMultilevel') && (i >= 13 && i <= 16) && (pins[13]['params']['1'] != 'white') && !(pins[i]['params'] != 'single')) {
+        return 'RGBLED'
+    }
 
-    for (var i = 1; i <= pages.length; i++) {
-        // add button
-        $("#manual_pages_control").append('<button class="manual_tablinks" onclick="openTab(event, ' + i + ')">' + i + '</button>');
-        // add page content
-        $("#manual_pages").append('<div id="' + i + '" class="manual_tabcontent">');
-        $("#manual_pages").append('<h3>Step #' + i + '</h3>');
-        $("#manual_pages").append('<p>' + pages[i]['content'] + '</p>');
-        $("#manual_pages").append('</div>');
+    if (i == 11) return pins[11]['type'] == 'DS18B20' ? 'DS18B20' : pins[i]['params']['1'];
+
+    return pins[i]['params']['1'];
+}
+
+function svgdGen(pinNum, deviceType, display) {
+    var anyDevice = false;
+
+    var buttonLegs = [], // this arrays contains current selected legs for device. This will be helpful when we want hide layer of device
+        pressureLegs = [],
+        contactorLegs = [],
+        reedSensor = [],
+        LED = [],
+        RGBLED = [],
+        RGBWLED = [],
+        LEDStrip = false;
+
+        if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
+        var mode = pins[pinNum]['type'],
+            pin  = 'pin' + pinNum;
+
+        // Pressure
+        if (pinNum >= 3 && pinNum <= 6) {
+
+        }
+
+        // Buttons
+        if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "general") {
+            for (var i = 3; i <= 12; i++) {
+                if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+
+                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general') && display) {        
+                    svgEl('layer7', 'obj_2').style.display = "block";
+                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 1;
+
+                    createManualPages();
+                    $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_white_led"] + '</p>');
+
+                    buttonLegs.push(i);
+                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
+                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
+
+                    if (i in buttonLegs) buttonLegs = -1;
+                }
+            }
+        }
+
+        // DS18B20
+        if (pinNum == 11 && deviceType == "DS18B20") {
+            if ((pins[11]['type'] == 'DS18B20') && display) {
+                svgEl('layer13', 'obj_2').style.display = "block";
+            } else if (!display) {
+                svgEl('layer13', 'obj_2').style.display = "none";
+            }
+        }
+
+        // DHT
+        if (pinNum == 11 || pinNum == 12 && (deviceType == "DHT11" || deviceType == "DHT22")) {
+            if ((pins[pinNum]['type'] == 'DHT') && display) {
+                svgEl('layer14', 'obj_2').style.display = "block";
+                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 1;
+            } else if (pins[pinNum]['type'] != 'DHT') {
+                svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
+            }
+            if (!display) {
+                svgEl('layer14', 'obj_2').style.display = "none";
+            }            
+        }
+
+        // Contactor
+        if (pinNum >= 13 && pinNum <= 16 && (deviceType == "switch")) {
+            for (var i = 13; i <= 16; i++) {
+                if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch') && display) {
+                    svgEl('layer12', 'obj_2').style.display = 'block';
+                    svgEl('leg_pin' + i + '_contactor', 'obj_2').style.display = 'block';
+                    contactorLegs.push(i);
+                } else if ((pins[i]['type'] != 'SwitchBinary') || (pins[i]['params']['1'] != 'switch')) {
+                    svgEl('leg_pin' + i + '_contactor', 'obj_2').style.display = 'none';
+                    
+                    if (i in contactorLegs) contactorLegs = -1;
+                }
+            }
+        }
+
+        // Reed Sensor
+        if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "door") {
+            for (var i = 3; i <= 12; i++) {
+                if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+
+                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door') && display) {        
+                    svgEl('layer9', 'obj_2').style.display = "block";
+                    svgEl('leg_pin' + i + '_reedSensor', 'obj_2').style.opacity = 1;
+
+                    reedSensor.push(i);
+                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'door')) {
+                    svgEl('leg_pin' + i + '_reedSensor', 'obj_2').style.opacity = 0;
+
+                    if (i in reedSensor) reedSensor = -1;
+                }
+            }
+        }
+
+        // TODO on html: make selector strip type: white, rbg, rgbw
+        // White LED strip
+        if (pinNum >= 13 && pinNum <= 16 && (deviceType == "single")) {
+            for (var i = 13; i <= 16; i++) {
+                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'single') && display) {
+                    svgEl('layer3', 'obj_2').style.display = 'block';
+                    svgEl('leg_pin' + i + '_led', 'obj_2').style.display = 'block';
+
+                    LED.push(i);
+                } else if ((pins[i]['type'] != 'SwitchMultilevel') || (pins[i]['params']['1'] != 'single')) {
+                    svgEl('leg_pin' + i + '_led', 'obj_2').style.display = 'none';
+                    
+                    if (i in LED) LED = -1;
+                }
+            }
+        }
+
+        // RGB LED strip
+        if (pinNum >= 14 && pinNum <= 16 && (deviceType == "RGBLED")) {
+            for (var i = 14; i <= 16; i++) {
+                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'red' || 
+                    pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && display) {
+
+                    svgEl('layer4', 'obj_2').style.display = 'block';
+                    svgEl('leg_pin' + i + '_rgbled', 'obj_2').style.display = 'block';
+
+                    RGBLED.push(i);
+                } else if ((pins[i]['type'] != 'SwitchMultilevel') || (pins[16]['params']['1'] != 'red' || 
+                    pins[15]['params']['1'] != 'green' || pins[14]['params']['1'] != 'blue')) {
+                    svgEl('leg_pin' + i + '_rgbled', 'obj_2').style.display = 'none';
+                    
+                    if (i in RGBLED) RGBLED = -1;
+                }
+            }
+        }
+
+        // RGBW LED strip
+        if (pinNum >= 13 && pinNum <= 16 && (deviceType == "RGBWLED")) {
+            for (var i = 13; i <= 16; i++) {
+                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'red' || 
+                    pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue'|| 
+                    pins[i]['params']['1'] == 'white') && display) {
+
+                    svgEl('layer8', 'obj_2').style.display = 'block';
+                    svgEl('leg_pin' + i + '_rgbwled', 'obj_2').style.display = 'block';
+
+                    RGBWLED.push(i);
+                } else if ((pins[i]['type'] != 'SwitchMultilevel') || (pins[i]['params']['1'] != 'red' || 
+                    pins[i]['params']['1'] != 'green' || pins[i]['params']['1'] != 'blue' || pins[i]['params']['1'] == 'white')) {
+                    svgEl('leg_pin' + i + '_rgbwled', 'obj_2').style.display = 'none';
+                    
+                    if (i in RGBWLED) RGBWLED = -1;
+                }
+            }
+        }
+
+        // TODO: selector led strip type
+    } else if (pinNum == -1) { // hide all layers if we get pinNum with -1 value
+        for (var i = 3; i <= 14; i++) {
+            if (i == 10 || i == 11) i = 12; 
+            svgEl('layer' + i, 'obj_2').style.display = 'none';
+        }
+    }
+
+    for (var i = 3; i <= 16; i++) {
+        if (i > 8 && i < 11) i = 11; 
+
+        // this try need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
+        try { if (pins[i]['type'] != 'NC') anyDevice = true; } catch(e) {}
+
+    }
+
+    // hide if no one leg doesn't connected
+    if (buttonLegs.length == 0 || (deviceType == "general" && !display)) {
+        svgEl('layer7', 'obj_2').style.display = "none";
+    }
+    if (contactorLegs.length == 0 || (deviceType == "switch" && !display)) {
+        svgEl('layer12', 'obj_2').style.display = "none";
+    }
+    if (reedSensor.length == 0 || (deviceType == "door" && !display)) {
+        svgEl('layer9', 'obj_2').style.display = "none";
+    }
+
+    if (LED.length == 0 || (deviceType == "single" && !display)) {
+        svgEl('layer3', 'obj_2').style.display = "none";
+    } else if (LED.length != 0) {
+        LEDStrip = true;
+    }
+    if (RGBLED.length == 0 || (deviceType == "RGBLED" && !display)) {
+        svgEl('layer4', 'obj_2').style.display = "none";
+    } else if (RGBLED.length != 0) {
+        LEDStrip = true;
+    }
+    if (RGBWLED.length == 0 || (deviceType == "RGBWLED" && !display)) {
+        svgEl('layer8', 'obj_2').style.display = "none";
+    } else if (RGBWLED.length != 0) {
+        LEDStrip = true;
+    }
+
+    // Power supply select 
+    if (anyDevice && (!LEDStrip) && (contactorLegs.length == 0)) { // if any device exists and device !LED we use small power supply  
+        svgEl('layer1', 'obj_2').style.display = "none"
+        svgEl('layer11', 'obj_2').style.display = "block";
+    } else if (anyDevice && (LEDStrip || contactorLegs.length > 0)) { // if device is LED we use 180W power supply
+        svgEl('layer11', 'obj_2').style.display = "none"
+        svgEl('layer1', 'obj_2').style.display = "block"
+    } else if (!anyDevice) {
+        svgEl('layer1', 'obj_2').style.display = "none"
+        svgEl('layer11', 'obj_2').style.display = "none";
+    }       
+}
+
+// Issue with tabs for pin 3
+function createManualPages() {
+    var countOfButtons = document.getElementById("manual_pages_control").getElementsByTagName("button").length;
+
+    for (var i = 3; i <= 16; i++) {
+        if (i == 9) i = 11;
+
+        try {   // this need to prevent early calling pins P.S. try to use global boolean variable what will give access to this function only afler onload event  
+            if (pins[i]['type'] != 'NC' && !document.getElementById('manual_page_' + i)) {
+                countOfButtons++;
+                // add button
+                $("#manual_pages_control").append('<button class="manual_tablinks" id="manual_control_button_' + i + '" onclick="openTab(event, \'manual_page_' + i + '\')">' + 'pin #' + i + '</button>');
+                // add page content
+                $("#manual_pages").append('<div id="manual_page_' + i + '" class="manual_tabcontent">');
+                $("#manual_page_" + i).append('<h3>Step for pin#' + i + '</h3>');
+                $("#manual_pages").append('</div>');
+
+            } else if (pins[i]['type'] == 'NC' && document.getElementById('manual_page_' + i)) {
+                $("#manual_control_button_" + i).remove();
+                $("#manual_page_" + i).remove();
+            }
+
+            generateContentOfTab(i);
+            countOfButtons = document.getElementById("manual_pages_control").getElementsByTagName("button").length;
+        } catch(e) {}
     }
 }
 
+function generateContentOfTab(i) {    
+    $(".manual_step_p").remove();
+    // Pressure
 
-//addManualPages();
-function svgdGenLoad() {
-    for (var i = 3; i < 17; i++) {
-        svgdGen(i, false);
-    }
+    
+    if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_buttons"] + '</p>');
+    
+    } else if (pins[i]['type'] == 'DS18B20') { // DS18B20
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_DS18B20"] + '</p>');
+
+    } else if (pins[i]['type'] == 'DHT') { // DHT
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_DHT"] + '</p>');
+
+    }else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) { // Contactor
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_contactor"] + '</p>');
+
+    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) { // Reed Sensor       
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_reed"] + '</p>');
+
+    } else if (pins[i]['params']['1'] == 'single') { // White LED
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_white_led"] + '</p>');
+
+    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') { // RGB LED strip
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_rgb_led"] + '</p>');
+
+    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') { // RGBW LED strip
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_rgbw_led"] + '</p>');
+    } 
 }
+
+pagesContent = {
+    'step_one': 'Burn the sketch in the Arduino IDE',
+    'step_two': 'Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)',
+    'step_white_led': 'Include ground of single color strip to ',
+    'step_rgb_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14); ',
+    'step_white_led': 'dfsds '
+};
