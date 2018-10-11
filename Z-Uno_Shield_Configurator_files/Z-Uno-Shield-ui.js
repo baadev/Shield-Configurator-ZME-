@@ -724,9 +724,9 @@ function openTab(evt, tab) {
 }
 
 function getDeviceType(i) {
-    if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] == 'white') && (pins[i]['params'] != 'single')) {
+    if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] == 'white') && (pins[i]['params']['1'] != 'single')) {
         return 'RGBWLED'
-    } else if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] != 'white') && (pins[i]['params'] != 'single')) {
+    } else if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] != 'white') && (pins[i]['params']['1'] != 'single')) {
         return 'RGBLED'
     }
 
