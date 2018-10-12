@@ -253,10 +253,12 @@ var codeTemplates = {
                 "percentage": 0,
                 "temperature": 1,
                 "luminance": 0,
-                "humidity": 0,
+                "ppm": 0,
+                "humidity": 1,
                 "voltage": 1,
                 "current": 1,
                 "distance": 1,
+                "pressure": 2,
             }[params[4]];
             
             var precision_str = {
@@ -273,6 +275,8 @@ var codeTemplates = {
                 "voltage": 2,
                 "current": 2,
                 "distance": 2,
+                "pressure": 4,
+                "ppm": 2,
             }[params[4]];
             
             var size_str = {
@@ -295,7 +299,9 @@ var codeTemplates = {
                 "humidity": "ZUNO_SENSOR_MULTILEVEL_TYPE_RELATIVE_HUMIDITY, SENSOR_MULTILEVEL_SCALE_PERCENTAGE_VALUE, " + size_str + ", " + precision_str,
                 "voltage": "ZUNO_SENSOR_MULTILEVEL_TYPE_VOLTAGE, SENSOR_MULTILEVEL_SCALE_VOLT, " + size_str + ", " + precision_str,
                 "current": "ZUNO_SENSOR_MULTILEVEL_TYPE_CURRENT, SENSOR_MULTILEVEL_SCALE_AMPERE, " + size_str + ", " + precision_str,
-                "distance": "ZUNO_SENSOR_MULTILEVEL_TYPE_DISTANCE, SENSOR_MULTILEVEL_SCALE_METER, " + size_str + ", " + precision_str
+                "distance": "ZUNO_SENSOR_MULTILEVEL_TYPE_DISTANCE, SENSOR_MULTILEVEL_SCALE_METER, " + size_str + ", " + precision_str,
+                "pressure": "ZUNO_SENSOR_MULTILEVEL_TYPE_ATMOSPHERIC_PRESSURE, SENSOR_MULTILEVEL_SCALE_KILO_PASCAL, " + size_str + ", " + precision_str,
+                "ppm": "ZUNO_SENSOR_MULTILEVEL_TYPE_CO2_LEVEL, SENSOR_MULTILEVEL_SCALE_PARTS_PER_MILLION, " + size_str + ", " + precision_str
             }[params[4]];
             
             params[5] = {

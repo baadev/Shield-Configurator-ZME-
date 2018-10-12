@@ -677,6 +677,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
                 <span>0–3V → </span><input id="pin6_ADC_i_3_param_1" size="2">–<input id="pin6_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
@@ -691,6 +693,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
                 <span>0–5V → </span><input id="pin6_ADC_i_5_param_1" size="2">–<input id="pin6_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
@@ -705,6 +709,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
                 <span>0–12V → </span><input id="pin6_ADC_i_12_param_1" size="2">–<input id="pin6_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
@@ -834,6 +840,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
                 <span>0–3V → </span><input id="pin5_ADC_i_3_param_1" size="2">–<input id="pin5_ADC_i_3_param_2" size="2"><span title="Map 0 – 3 Volts to value range">[i]</span>
@@ -848,6 +856,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
                 <span>0–5V → </span><input id="pin5_ADC_i_5_param_1" size="2">–<input id="pin5_ADC_i_5_param_2" size="2"><span title="Map 0 – 5 Volts to value range">[i]</span>
@@ -862,6 +872,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
                 <span>0–12V → </span><input id="pin5_ADC_i_12_param_1" size="2">–<input id="pin5_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
@@ -991,6 +1003,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
 
@@ -1006,6 +1020,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
 
@@ -1021,6 +1037,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
                 <span>0–12V → </span><input id="pin4_ADC_i_12_param_1" size="2">–<input id="pin4_ADC_i_12_param_2" size="2"><span title="Map 0 – 12 Volts to value range">[i]</span>
@@ -1153,6 +1171,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
 
@@ -1168,6 +1188,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
 
@@ -1183,6 +1205,8 @@
                     <option value="voltage">Voltage, V</option>
                     <option value="current">Current, A</option>
                     <option value="distance">Distance, m</option>
+                    <option value="kPa">Pressure, kPa</option>
+                    <option value="ppm">CO2, PPM</option>
                 </select>
                 <br>
 
@@ -1362,6 +1386,36 @@
     .manual_tabcontent h3 {
         padding-top: 1em;
     }
+
+
+    #manual_led_type_select {
+        width: fit-content;
+        margin-left: -6px;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+    #manual_led_type_select button {
+        background-color: #ddd;
+        border: 1px solid #ddd;
+        color: white;
+        padding: 15px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        float: left;
+    }
+    #manual_led_type_select button:not(:last-child) {
+        border-right: none; /* Prevent double borders */
+    }
+    #manual_led_type_select button:hover {
+        background-color: #ccc;
+    }
+    #manual_led_type_select button.manual_active {
+        background-color: #bbb;
+    }
 </style>
 
 <div class="settings_row_connection">
@@ -1378,14 +1432,20 @@
         </div>
 
         <div id="manual_page_0" class="manual_tabcontent">
+            <div id="manual_led_type_select">
+                <button class="manual_tablinks" onclick="">Without amplifier</button>
+                <button class="manual_tablinks" onclick="">With amplifier</button>
+            </div>
             <h3>Step #1</h3>
             <p>Burn the sketch in the Arduino IDE</p>
+                
         </div>
 
         <div id="manual_page_1" class="manual_tabcontent">
             <h3>Step #2</h3>
             <p>Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)</p> 
         </div>
+
     </div>
 
 <!--     <div class="settings_manual_connection">

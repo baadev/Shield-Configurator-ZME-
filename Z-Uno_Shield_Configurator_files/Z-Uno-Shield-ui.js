@@ -7,8 +7,8 @@ function svgEl(id, obj) {
 function htmlEl(id) {
     return document.getElementById(id);
 }
-function htmlCEl(id) {
-    return document.getElementsByClassName(id);
+function htmlCEl(className) {
+    return document.getElementsByClassName(className);
 }
 
 function htmlElsEna(name, ena) {
@@ -723,14 +723,23 @@ function openTab(evt, tab) {
     createManualPages();
 }
 
+function amplifierInclude(include) {
+    if (include) {
+        svgEl('layer5', 'obj_2').style.display = "block";
+    } else if (!include) {
+        svgEl('layer5', 'obj_2').style.display = "none";  
+    }
+}
+
 function getDeviceType(i) {
-    if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] == 'white') && (pins[i]['params']['1'] != 'single')) {
+    if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue' || pins[i]['params']['1'] == 'white') && (pins[13]['params']['1'] == 'white') && (pins[i]['params']['1'] != 'single')) {
         return 'RGBWLED'
     } else if ((pins[i]['params']['1'] == 'red' || pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue') && (pins[13]['params']['1'] != 'white') && (pins[i]['params']['1'] != 'single')) {
         return 'RGBLED'
     }
 
-    if (i == 11) return pins[11]['type'] == 'DS18B20' ? 'DS18B20' : pins[i]['params']['1'];
+    if (i == 11 && pins[11]['type'] == 'DS18B20') return 'DS18B20';
+    if (pins[i]['params']['4'] == 'kPa') return 'pressure';
 
     return pins[i]['params']['1'];
 }
@@ -745,6 +754,7 @@ function svgdGen(pinNum, deviceType, display) {
         LED = [],
         RGBLED = [],
         RGBWLED = [],
+        pressureLegs = [],
         LEDStrip = false;
 
         if ((pinNum >= 3 && pinNum <=8) || (pinNum >= 11 && pinNum <= 16)) {
@@ -752,34 +762,50 @@ function svgdGen(pinNum, deviceType, display) {
             pin  = 'pin' + pinNum;
 
         // Pressure
-        if (pinNum >= 3 && pinNum <= 6) {
+        if (pinNum >= 3 && pinNum <= 6 && deviceType == "pressure") {
+            if (pins[pinNum]['type'] == 'SensorMultilevel' && pins[pinNum]['params']['4'] == "kPa" && display) {
+                svgEl('layer6', 'obj_2').style.display = "block";
+                svgEl('leg_pin' + pinNum + '_pressure', 'obj_2').style.opacity = 1;
 
+                createManualPages();
+                $("#manual_page_" + pinNum).append('<p class="manual_step_p">' + pagesContent["step_pressure"] + '</p>');
+
+                pressureLegs.push(pinNum);
+            }
+
+            for (var i = 3; i <= 6; i++) {
+                if (i == pinNum) continue;
+                if (i in pressureLegs) pressureLegs = -1;
+                
+                svgEl('leg_pin' + i + '_pressure', 'obj_2').style.opacity = 0;
+            }
         }
 
         // Buttons
         if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "general") {
+            if ((pins[pinNum]['type'] == 'SensorBinary') && (pins[pinNum]['params']['1'] == 'general') && display) {        
+                svgEl('layer7', 'obj_2').style.display = "block";
+                svgEl('leg_pin' + pinNum + '_button', 'obj_2').style.opacity = 1;
+
+                createManualPages();
+                $("#manual_page_" + pinNum).append('<p class="manual_step_p">' + pagesContent["step_white_led"] + '</p>');
+
+                buttonLegs.push(pinNum);
+            }
+
             for (var i = 3; i <= 12; i++) {
-                if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
-
-                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general') && display) {        
-                    svgEl('layer7', 'obj_2').style.display = "block";
-                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 1;
-
-                    createManualPages();
-                    $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_white_led"] + '</p>');
-
-                    buttonLegs.push(i);
-                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'general')) {
-                    svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
-
-                    if (i in buttonLegs) buttonLegs = -1;
-                }
+                if (i == 9) i = 11; // these pins can't be used for button connect
+                if (i == pinNum) continue;
+                if (i in buttonLegs) buttonLegs = -1;
+                
+                svgEl('leg_pin' + i + '_button', 'obj_2').style.opacity = 0;
             }
         }
 
         // DS18B20
         if (pinNum == 11 && deviceType == "DS18B20") {
             if ((pins[11]['type'] == 'DS18B20') && display) {
+                svgEl('layer13', 'obj_2').style.display = "block";
                 svgEl('layer13', 'obj_2').style.display = "block";
             } else if (!display) {
                 svgEl('layer13', 'obj_2').style.display = "none";
@@ -794,6 +820,7 @@ function svgdGen(pinNum, deviceType, display) {
             } else if (pins[pinNum]['type'] != 'DHT') {
                 svgEl('leg_pin' + pinNum + '_DHT', 'obj_2').style.opacity = 0;
             }
+
             if (!display) {
                 svgEl('layer14', 'obj_2').style.display = "none";
             }            
@@ -801,34 +828,36 @@ function svgdGen(pinNum, deviceType, display) {
 
         // Contactor
         if (pinNum >= 13 && pinNum <= 16 && (deviceType == "switch")) {
+            if ((pins[pinNum]['type'] == 'SwitchBinary') && (pins[pinNum]['params']['1'] == 'switch') && display) {
+                svgEl('layer12', 'obj_2').style.display = 'block';
+                svgEl('leg_pin' + pinNum + '_contactor', 'obj_2').style.display = 'block';
+             
+                contactorLegs.push(pinNum);
+            }
+
             for (var i = 13; i <= 16; i++) {
-                if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch') && display) {
-                    svgEl('layer12', 'obj_2').style.display = 'block';
-                    svgEl('leg_pin' + i + '_contactor', 'obj_2').style.display = 'block';
-                    contactorLegs.push(i);
-                } else if ((pins[i]['type'] != 'SwitchBinary') || (pins[i]['params']['1'] != 'switch')) {
-                    svgEl('leg_pin' + i + '_contactor', 'obj_2').style.display = 'none';
-                    
-                    if (i in contactorLegs) contactorLegs = -1;
-                }
+                if (i == pinNum) continue;
+                if (i in contactorLegs) contactorLegs = -1;
+             
+                svgEl('leg_pin' + i + '_contactor', 'obj_2').style.display = 'none';
             }
         }
 
         // Reed Sensor
         if (((pinNum >= 3 && pinNum <= 8) || pinNum == 11 || pinNum == 12) && deviceType == "door") {
+            if ((pins[pinNum]['type'] == 'SensorBinary') && (pins[pinNum]['params']['1'] == 'door') && display) {        
+                svgEl('layer9', 'obj_2').style.display = "block";
+                svgEl('leg_pin' + pinNum + '_reedSensor', 'obj_2').style.opacity = 1;
+
+                reedSensor.push(pinNum);
+            }
+
             for (var i = 3; i <= 12; i++) {
-                if (i > 8 && i < 11) i = 11; // these pins aren't used in Shield
+                if (i == 9) i = 12; // pins 9-11 can't be used in reed sensor
+                if (i == pinNum) continue;
+                if (i in reedSensor) reedSensor = -1;
 
-                if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door') && display) {        
-                    svgEl('layer9', 'obj_2').style.display = "block";
-                    svgEl('leg_pin' + i + '_reedSensor', 'obj_2').style.opacity = 1;
-
-                    reedSensor.push(i);
-                } else if ((pins[i]['type'] != 'SensorBinary') || (pins[i]['params']['1'] != 'door')) {
-                    svgEl('leg_pin' + i + '_reedSensor', 'obj_2').style.opacity = 0;
-
-                    if (i in reedSensor) reedSensor = -1;
-                }
+                svgEl('leg_pin' + i + '_reedSensor', 'obj_2').style.opacity = 0;
             }
         }
 
@@ -871,23 +900,24 @@ function svgdGen(pinNum, deviceType, display) {
 
         // RGBW LED strip
         if (pinNum >= 13 && pinNum <= 16 && (deviceType == "RGBWLED")) {
+            if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'red' || 
+                pins[pinNum]['params']['1'] == 'green' || pins[pinNum]['params']['1'] == 'blue'|| 
+                pins[pinNum]['params']['1'] == 'white') && display) {
+
+                svgEl('layer8', 'obj_2').style.display = 'block';
+                svgEl('leg_pin' + pinNum + '_rgbwled', 'obj_2').style.display = 'block';
+
+                RGBWLED.push(pinNum);
+            }
+
             for (var i = 13; i <= 16; i++) {
-                if ((pins[i]['type'] == 'SwitchMultilevel') && (pins[i]['params']['1'] == 'red' || 
-                    pins[i]['params']['1'] == 'green' || pins[i]['params']['1'] == 'blue'|| 
-                    pins[i]['params']['1'] == 'white') && display) {
+                if (i == pinNum) continue;
+                if (i in RGBWLED) RGBWLED = -1;
 
-                    svgEl('layer8', 'obj_2').style.display = 'block';
-                    svgEl('leg_pin' + i + '_rgbwled', 'obj_2').style.display = 'block';
-
-                    RGBWLED.push(i);
-                } else if ((pins[i]['type'] != 'SwitchMultilevel') || (pins[i]['params']['1'] != 'red' || 
-                    pins[i]['params']['1'] != 'green' || pins[i]['params']['1'] != 'blue' || pins[i]['params']['1'] == 'white')) {
-                    svgEl('leg_pin' + i + '_rgbwled', 'obj_2').style.display = 'none';
-                    
-                    if (i in RGBWLED) RGBWLED = -1;
-                }
+                svgEl('leg_pin' + i + '_rgbwled', 'obj_2').style.display = 'none';                    
             }
         }
+        
 
         // TODO: selector led strip type
     } else if (pinNum == -1) { // hide all layers if we get pinNum with -1 value
@@ -915,6 +945,9 @@ function svgdGen(pinNum, deviceType, display) {
     if (reedSensor.length == 0 || (deviceType == "door" && !display)) {
         svgEl('layer9', 'obj_2').style.display = "none";
     }
+    if (pressureLegs.length == 0 || (deviceType == "Pressure" && !display)) {
+        svgEl('layer6', 'obj_2').style.display = "none";
+    }
 
     if (LED.length == 0 || (deviceType == "single" && !display)) {
         svgEl('layer3', 'obj_2').style.display = "none";
@@ -933,10 +966,10 @@ function svgdGen(pinNum, deviceType, display) {
     }
 
     // Power supply select 
-    if (anyDevice && (!LEDStrip) && (contactorLegs.length == 0)) { // if any device exists and device !LED we use small power supply  
+    if (anyDevice && !LEDStrip || (contactorLegs.length > 0)) { // if any device exists and device !LED we use small power supply  
         svgEl('layer1', 'obj_2').style.display = "none"
         svgEl('layer11', 'obj_2').style.display = "block";
-    } else if (anyDevice && (LEDStrip || contactorLegs.length > 0)) { // if device is LED we use 180W power supply
+    } else if (anyDevice && LEDStrip) { // if device is LED we use 180W power supply
         svgEl('layer11', 'obj_2').style.display = "none"
         svgEl('layer1', 'obj_2').style.display = "block"
     } else if (!anyDevice) {
@@ -966,6 +999,8 @@ function createManualPages() {
             } else if (pins[i]['type'] == 'NC' && htmlEl('manual_page_' + i)) {
                 $("#manual_control_button_" + i).remove();
                 $("#manual_page_" + i).remove();
+            } else if (pins[i]['type'] != 'NC') {
+                generateContentOfTab(i);
             }
 
             countOfButtons = htmlEl("manual_pages_control").getElementsByTagName("button").length;
@@ -973,10 +1008,12 @@ function createManualPages() {
     }
 }
 
-function generateContentOfTab(i) {    
-    // Pressure
-    
-    if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
+function generateContentOfTab(i) {
+
+    if (pins[i]['params']['4'] == 'kPa' && document.getElementById("manual_page_" + i).getElementsByClassName('manual_step_p').length == 0) { // Pressure
+        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_pressure"] + '</p>');
+
+    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_buttons"] + '</p>');
     
     } else if (pins[i]['type'] == 'DS18B20') { // DS18B20
@@ -992,12 +1029,15 @@ function generateContentOfTab(i) {
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_reed"] + '</p>');
 
     } else if (pins[i]['params']['1'] == 'single') { // White LED
+        $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_white_led"] + '</p>');
 
     } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') { // RGB LED strip
+        $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_rgb_led"] + '</p>');
 
     } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') { // RGBW LED strip
+        $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
         $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_rgbw_led"] + '</p>');
     } 
 }
@@ -1005,7 +1045,11 @@ function generateContentOfTab(i) {
 pagesContent = {
     'step_one': 'Burn the sketch in the Arduino IDE',
     'step_two': 'Put the Shield in the DIN rail (pic. 1) or in the waterproof case (pic. 2)',
-    'step_white_led': 'Include ground of single color strip to ',
-    'step_rgb_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14); ',
-    'step_white_led': 'dfsds '
+    'step_white_led': 'Include ground of single color strip.',
+    'step_rgb_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14).',
+    'step_rgbw_led': 'Connect: <br>\tRed -> PWM4(pin16); <br>Green -> PWM3(pin15); <br>Blue -> PWM2(pin14); <br>White -> PWM1(pin13).',
+    'step_buttons': 'Connect one side of button pins to GND and another to chosen pin.',
+    'step_DS18B20': 'Connect middle leg of DS18B20 to pin #11 and add power supply 3V',
+    'step_contactor': 'Connect logical pin of contactor to digital ouput',
+    'step_pressure': 'Connect pressure sensor'
 };
