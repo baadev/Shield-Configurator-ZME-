@@ -617,8 +617,18 @@ function loadConfiguration() {
 }
 
 // Default
+htmlEl('obj').onload = function() {
+    document.getElementsByClassName('zoom_svg')[0].onclick = function() {
+        var flex = parseFloat(this.parentNode.style.flexGrow);
+        if (!flex) flex = 1;
+        
+        if (flex < 1.9) flex += 0.3;
+        else flex = 1;
+        
+        this.parentNode.style.flexGrow = flex;
+    };
+}
 
-// TODO: Think about onload event
 htmlEl('obj_2').onload = function() {
     ['pin3pwm', 'pin3', 'pin4', 'pin5', 'pin6', 'pin7', 'pin8', 'pin11', 'pin12', 'pin13', 'pin14', 'pin15', 'pin16'].forEach(function(pin) {
         htmlEl('settings_' + pin).onmouseover = function() {
@@ -630,16 +640,6 @@ htmlEl('obj_2').onload = function() {
             svgEl('connector_' + pin, 'obj_2').style.fill = '#358800';
         };
     });
-    
-    document.getElementsByClassName('zoom_svg')[0].onclick = function() {
-        var flex = parseFloat(this.parentNode.style.flexGrow);
-        if (!flex) flex = 1;
-        
-        if (flex < 1.9) flex += 0.3;
-        else flex = 1;
-        
-        this.parentNode.style.flexGrow = flex;
-    };
     
     loadConfiguration();
 };
@@ -855,7 +855,6 @@ function svgdGen(pinNum, deviceType, display) {
             }
         }
 
-        // TODO on html: make selector strip type: white, rbg, rgbw
         // White LED strip
         if (pinNum >= 13 && pinNum <= 16 && (deviceType == "single")) {
             if ((pins[pinNum]['type'] == 'SwitchMultilevel') && (pins[pinNum]['params']['1'] == 'single') && display) {
@@ -913,7 +912,6 @@ function svgdGen(pinNum, deviceType, display) {
         }
         
 
-        // TODO: selector led strip type
     } else if (pinNum == -1) { // hide all layers if we get pinNum with -1 value
         for (var i = 3; i <= 14; i++) {
             if (i == 10 || i == 11) i = 12; 
@@ -1048,3 +1046,5 @@ pagesContent = {
     'step_contactor': 'Connect logical pin of contactor to digital ouput',
     'step_pressure': 'Connect pressure sensor'
 };
+
+// Issue with ADC0 - don't work page creation for this pin after reload page
