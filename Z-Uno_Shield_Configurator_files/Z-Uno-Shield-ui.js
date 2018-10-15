@@ -7,8 +7,8 @@ function svgEl(id, obj) {
 function htmlEl(id) {
     return document.getElementById(id);
 }
-function htmlCEl(className) {
-    return document.getElementsByClassName(className);
+function htmlCEl(cn) {
+    return document.getElementsByClassName(cn);
 }
 
 function htmlElsEna(name, ena) {
@@ -767,9 +767,6 @@ function svgdGen(pinNum, deviceType, display) {
                 svgEl('layer6', 'obj_2').style.display = "block";
                 svgEl('leg_pin' + pinNum + '_pressure', 'obj_2').style.opacity = 1;
 
-                createManualPages();
-                $("#manual_page_" + pinNum).append('<p class="manual_step_p">' + pagesContent["step_pressure"] + '</p>');
-
                 pressureLegs.push(pinNum);
             }
 
@@ -786,9 +783,6 @@ function svgdGen(pinNum, deviceType, display) {
             if ((pins[pinNum]['type'] == 'SensorBinary') && (pins[pinNum]['params']['1'] == 'general') && display) {        
                 svgEl('layer7', 'obj_2').style.display = "block";
                 svgEl('leg_pin' + pinNum + '_button', 'obj_2').style.opacity = 1;
-
-                createManualPages();
-                $("#manual_page_" + pinNum).append('<p class="manual_step_p">' + pagesContent["step_white_led"] + '</p>');
 
                 buttonLegs.push(pinNum);
             }
@@ -1009,37 +1003,38 @@ function createManualPages() {
 }
 
 function generateContentOfTab(i) {
+    if (htmlCEl("manual_step_p_" + i).length == 0) {
+        if (pins[i]['params']['4'] == 'kPa') { // Pressure
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_pressure"] + '</p>');
 
-    if (pins[i]['params']['4'] == 'kPa' && document.getElementById("manual_page_" + i).getElementsByClassName('manual_step_p').length == 0) { // Pressure
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_pressure"] + '</p>');
+        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_buttons"] + '</p>');
+        
+        } else if (pins[i]['type'] == 'DS18B20') { // DS18B20
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_DS18B20"] + '</p>');
 
-    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'general')) { // Buttons
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_buttons"] + '</p>');
-    
-    } else if (pins[i]['type'] == 'DS18B20') { // DS18B20
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_DS18B20"] + '</p>');
+        } else if (pins[i]['type'] == 'DHT') { // DHT
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_DHT"] + '</p>');
 
-    } else if (pins[i]['type'] == 'DHT') { // DHT
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_DHT"] + '</p>');
+        } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) { // Contactor
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_contactor"] + '</p>');
 
-    } else if ((pins[i]['type'] == 'SwitchBinary') && (pins[i]['params']['1'] == 'switch')) { // Contactor
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_contactor"] + '</p>');
+        } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) { // Reed Sensor       
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_reed"] + '</p>');
 
-    } else if ((pins[i]['type'] == 'SensorBinary') && (pins[i]['params']['1'] == 'door')) { // Reed Sensor       
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_reed"] + '</p>');
+        } else if (pins[i]['params']['1'] == 'single') { // White LED
+            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_white_led"] + '</p>');
 
-    } else if (pins[i]['params']['1'] == 'single') { // White LED
-        $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_white_led"] + '</p>');
+        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') { // RGB LED strip
+            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_rgb_led"] + '</p>');
 
-    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] != 'white') { // RGB LED strip
-        $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_rgb_led"] + '</p>');
-
-    } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') { // RGBW LED strip
-        $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
-        $("#manual_page_" + i).append('<p class="manual_step_p">' + pagesContent["step_rgbw_led"] + '</p>');
-    } 
+        } else if (pins[i]['type'] == 'SwitchMultilevel' && pins[13]['params']['1'] == 'white') { // RGBW LED strip
+            $("#manual_page_" + i).prepend('<div id="manual_led_type_select"><button class="manual_tablinks_off" onclick="event, amplifierInclude(false)">Without amplifier</button><button class="manual_tablinks_on" onclick="event, amplifierInclude(true)">With amplifier</button></div>');
+            $("#manual_page_" + i).append('<p class="manual_step_p_'+ i +'">' + pagesContent["step_rgbw_led"] + '</p>');
+        } 
+    }
 }
 
 pagesContent = {
